@@ -1,5 +1,6 @@
 package Monitor;
 
+import GUI.Observer.ModelObserver;
 import Utility.Pair;
 
 import java.util.ArrayList;
@@ -11,22 +12,13 @@ public class IntervalMonitor {
 
 
     private HashMap<Pair<Integer,Integer>, Integer> intervalMap;
-    private final int MAXL;
     private final int NI;
     private boolean isAvailable;
-    //private final List<ModelObserver> observers = new ArrayList<>();
 
     public IntervalMonitor(final int MAXL, final int NI){
         this.isAvailable = true;
-        this.MAXL = MAXL;
         this.NI = NI;
         this.initMap(MAXL, NI);
-    }
-
-    public IntervalMonitor(){
-        this.MAXL = 0;
-        this.NI = 0;
-        this.isAvailable = true;
     }
 
     public void initMap(final int MAXL, final int NI){
@@ -68,7 +60,6 @@ public class IntervalMonitor {
 
         this.isAvailable = true;
         notifyAll();
-        //notifyObservers();
     }
 
 
@@ -83,5 +74,4 @@ public class IntervalMonitor {
         notifyAll();
         return (HashMap<Pair<Integer, Integer>, Integer>) this.intervalMap.clone();
     }
-
 }

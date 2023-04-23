@@ -1,5 +1,6 @@
 package Monitor;
 
+import GUI.Observer.ModelObserver;
 import Utility.Pair;
 
 import java.io.File;
@@ -11,7 +12,6 @@ import java.util.*;
 public class FileMonitor {
 
     private final TreeSet<Pair<File, Long>> fileLengthMap;
-    //private final List<ModelObserver> observers;
     private boolean isAvailable;
 
     public FileMonitor(){
@@ -23,7 +23,6 @@ public class FileMonitor {
             }
             return countCompare;
         });
-        //this.observers = new ArrayList<>();
     }
 
     public void clearMap(){
@@ -44,7 +43,7 @@ public class FileMonitor {
         this.isAvailable = true;
 
         notifyAll();
-        //notifyObservers();
+
     }
 
     public synchronized TreeSet<Pair<File,Long>> getFileLengthMap() {
@@ -57,4 +56,5 @@ public class FileMonitor {
         notifyAll();
         return (TreeSet<Pair<File, Long>>) this.fileLengthMap.clone();
     }
+
 }

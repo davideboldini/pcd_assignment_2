@@ -1,6 +1,10 @@
+import GUI.GuiForm;
 import Model.Directory;
+import Monitor.FileMonitor;
+import Monitor.IntervalMonitor;
 import Utility.Analyser.SourceAnalyser;
 import Utility.Analyser.SourceAnalyserImpl;
+import Utility.Chrono;
 import Utility.Pair;
 
 import java.io.File;
@@ -13,8 +17,6 @@ public class Main {
     public static void main(String[] args) {
 
         int poolSize = Runtime.getRuntime().availableProcessors() + 1;
-
-
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Seleziona modalità: \n 1) Riga di comando \n 2) GUI \n");
@@ -40,10 +42,26 @@ public class Main {
             //final int NI = 5; //args[1] - Numero intervalli
             int NI = scan.nextInt();
 
-            SourceAnalyser sourceAnalyser = new SourceAnalyserImpl(MAXL, NI, N, poolSize);
+            final Chrono chrono = new Chrono();
+
+            SourceAnalyser sourceAnalyser = new SourceAnalyserImpl();
+            sourceAnalyser.initSource(MAXL, NI, N, poolSize);
+
+            chrono.start();
+
             Pair<Map<Pair<Integer, Integer>, Integer>, List<Pair<File,Long>>> resultReport = sourceAnalyser.getReport(new Directory(D));
-            System.out.println(resultReport);
+
+            chrono.stop();
+            System.out.println(resultReport.getY());
+            System.out.println(resultReport.getX());
+            System.out.println("Tempo impiegato: " + chrono.getTime());
+        }else if(choose == 2){
+            System.out.println("Selezionato: GUI");
+            GuiForm window = new GuiForm();
+
+            window.setVisible(true);
+        }else {
+            System.out.println("Errore: Input errato");
         }
     }
-
 }

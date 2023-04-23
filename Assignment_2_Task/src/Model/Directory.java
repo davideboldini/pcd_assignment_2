@@ -16,14 +16,16 @@ public class Directory {
         return this.dirPath;
     }
 
+    public List<File> getAllElementsList(){
+        return Arrays.asList(Objects.requireNonNull(new File(dirPath).listFiles()));
+    }
+
     public List<File> getJavaFileList(){
-        List<File> fileList = new ArrayList<>(Arrays.stream(Objects.requireNonNull(new File(dirPath).listFiles((dir, name) -> name.endsWith(".java")))).toList());
-        return fileList;
+        return new ArrayList<>(Arrays.stream(Objects.requireNonNull(new File(dirPath).listFiles((dir, name) -> name.endsWith(".java")))).toList());
     }
 
     public List<File> getGenericFileList(){
-        List<File> fileList = new ArrayList<>(Arrays.stream(Objects.requireNonNull(new File(dirPath).listFiles())).toList());
-        return fileList;
+        return new ArrayList<>(Arrays.stream(Objects.requireNonNull(new File(dirPath).listFiles())).toList());
     }
 
     public List<Directory> getDirectoryList(){

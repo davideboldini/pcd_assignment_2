@@ -12,19 +12,14 @@ import java.util.concurrent.Executors;
 
 public class DirectoryTask {
 
-    private final int nInterval;
-    private final Directory directory;
     private final FileMonitor fileMonitor;
     private final IntervalMonitor intervalMonitor;
     private final ExecutorService executor;
-    //private final CountDownLatch latch;
 
-    public DirectoryTask(final Directory directory, final ExecutorService executor, final int nInterval, final FileMonitor fileMonitor,
+    public DirectoryTask(final Directory directory, final ExecutorService executor, final FileMonitor fileMonitor,
                          final IntervalMonitor intervalMonitor){
-        this.directory = directory;
         this.fileMonitor = fileMonitor;
         this.executor = executor;
-        this.nInterval = nInterval;
         this.intervalMonitor = intervalMonitor;
         this.getDirectoryList(directory);
     }
@@ -32,29 +27,17 @@ public class DirectoryTask {
     private void getDirectoryList(final Directory dir){
         List<Directory> dirList = dir.getDirectoryList();
         dirList.forEach(this::getDirectoryList);
-        getFileList(dir);
+        this.getFileList(dir);
     }
 
     private void getFileList(final Directory dir) {
         List<File> fileList = dir.getJavaFileList();
-
-        if (!fileList.isEmpty()){
-
-            int sizeInterval = (fileList.size() / nInterval) + 1;
-
-            List<File> tempList = new ArrayList<>(fileList.stream().toList());
-
-            while(!tempList.isEmpty()){
-                List<File> subList = new LinkedList<>();
-                if (tempList.size() < 2*sizeInterval || tempList.size() == sizeInterval) {
-                    subList.addAll(tempList);
-                    tempList.clear();
-                } else {
-                    subList.addAll(tempList.subList(0, sizeInterval));
-                    tempList.subList(0, sizeInterval).clear();
-                }
-                executor.execute(new FileTask(subList, fileMonitor, intervalMonitor));
+        try {
+            for (File file: fileList) {
+                executor.execute(new FileTask(file, fileMonitor, intervalMonitor));
             }
-        }
+        }catch (Exception ignored){}
+
     }
+
 }
