@@ -1,21 +1,16 @@
 package GUI;
 
-import GUI.Observer.ModelObserver;
-import Model.Directory;
-import Monitor.FileMonitor;
-import Monitor.IntervalMonitor;
-import Task.UpdateGuiTask;
-import Utility.Analyser.SourceAnalyser;
-import Utility.Analyser.SourceAnalyserImpl;
+import Controller.GuiController;
+import Monitor.GuiObserver;
+import utility.Pair;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
 import java.io.File;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 
-public class GuiForm implements ModelObserver {
+public class GuiForm implements GuiObserver  {
 
 	private final JFrame frame;
 	private final JTextArea textAreaInterval;
@@ -23,25 +18,18 @@ public class GuiForm implements ModelObserver {
 	private final JButton btnStop;
 	private final JButton btnSearch;
 	private int N;
-	private final SourceAnalyser sourceAnalyser;
-	private final int poolSize = Runtime.getRuntime().availableProcessors() + 1;
-	private ScheduledExecutorService executorService;
 
 	/**
 	 * Create the application.
 	 */
-	public GuiForm() {
-
-		sourceAnalyser = new SourceAnalyserImpl();
-		sourceAnalyser.addObserver(this);
+	public GuiForm(final GuiController guiController) {
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 922, 520);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-
-		JLabel lblTitle = new JLabel("Progetto 2 - Task");
+		JLabel lblTitle = new JLabel("Progetto 2 - Virtual Thread");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTitle.setBounds(10, 0, 913, 35);
@@ -143,9 +131,9 @@ public class GuiForm implements ModelObserver {
 				textAreaInterval.setText("");
 				textAreaInterval.setEditable(true);
 
-				sourceAnalyser.initSource(textMaxLength, numInterval, N, poolSize);
-				sourceAnalyser.analyzeSources(new Directory(textFieldDirectory.getText()));
-				this.updateGui();
+				Thread t = new Thread(guiController);
+				guiController.processEvent(textFieldDirectory.getText(), N, Integer.parseInt(textFieldMaxLength.getText()), (Integer) spinnerNumInterval.getValue());
+				t.start();
 
 				btnSearch.setEnabled(false);
 				btnStop.setEnabled(true);
@@ -157,9 +145,9 @@ public class GuiForm implements ModelObserver {
 
 		btnStop.addActionListener(e -> {
 			btnStop.setEnabled(false);
-			sourceAnalyser.stopAnalyze();
-			executorService.shutdown();
 			btnSearch.setEnabled(true);
+
+			guiController.processStop();
 
 			textAreaFileLength.setEditable(false);
 			textAreaInterval.setEditable(false);
@@ -168,7 +156,7 @@ public class GuiForm implements ModelObserver {
 		btnStop.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnStop.setBounds(476, 180, 104, 35);
 		frame.getContentPane().add(btnStop);
-
+		
 		JScrollPane scrollPane = new JScrollPane(textAreaInterval);
 		scrollPane.setBounds(470, 279, 406, 171);
 		frame.getContentPane().add(scrollPane);
@@ -177,18 +165,51 @@ public class GuiForm implements ModelObserver {
 		lblNRowsFile.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNRowsFile.setBounds(10, 129, 208, 23);
 		frame.getContentPane().add(lblNRowsFile);
-
+		
 		JScrollPane scrollPane_1 = new JScrollPane(textAreaFileLength);
 		scrollPane_1.setBounds(25, 279, 431, 171);
 		frame.getContentPane().add(scrollPane_1);
 	}
 
 	@Override
-	public void analyzeEnded() {
+	public void guiFileLengthUpdated(TreeSet<Pair<File, Long>> fileLengthMap) {
+		try {
+			//System.out.println("[View] model updated => updating the view");
+			SwingUtilities.invokeLater(() -> {
+				if (fileLengthMap.size() > N){
+					textAreaFileLength.setText("");
+					List<Pair<File, Long>> fileList = fileLengthMap.stream().toList().subList(0,N);
+					fileList.forEach(pair -> textAreaFileLength.setText(textAreaFileLength.getText() + "\n" + "File: " + pair.getX().getName() + " - Len: " + pair.getY() + "\n"));
+				}
+			});
+		} catch (Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void guiIntervalUpdated(HashMap<Pair<Integer, Integer>, Integer> intervalMap) {
 		try {
 			SwingUtilities.invokeLater(() -> {
-				sourceAnalyser.stopAnalyze();
-				executorService.shutdown();
+				textAreaInterval.setText("");
+				intervalMap.forEach((key, value) -> {
+					if (key.getY().equals(-1)) {
+						textAreaInterval.setText(textAreaInterval.getText() + "Intervallo [ " + key.getX() + " - inf ]: " + value + "\n");
+					} else {
+						textAreaInterval.setText(textAreaInterval.getText() + "Intervallo [ " + key.getX() + " - " + key.getY() + " ]: " + value + "\n");
+					}
+				});
+			});
+		} catch (Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	@Override
+	public void guiUpdateEnd() {
+		try {
+			SwingUtilities.invokeLater(() -> {
 				JOptionPane.showMessageDialog(frame, "Elaborazione terminata","Completato", JOptionPane.PLAIN_MESSAGE);
 				btnStop.setEnabled(false);
 				btnSearch.setEnabled(true);
@@ -202,8 +223,4 @@ public class GuiForm implements ModelObserver {
 		frame.setVisible(visible);
 	}
 
-	private void updateGui(){
-		executorService = Executors.newSingleThreadScheduledExecutor();
-		executorService.scheduleAtFixedRate(new UpdateGuiTask(sourceAnalyser.getFileMonitor(), sourceAnalyser.getIntervalMonitor(), textAreaFileLength, textAreaInterval, N), 500, 500, TimeUnit.MILLISECONDS);
-	}
 }
