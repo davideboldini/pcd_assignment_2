@@ -10,7 +10,7 @@ public interface GuiObserver {
 
     void guiFileLengthUpdated(TreeSet<Pair<File, Long>> fileLengthMap);
     void guiIntervalUpdated(HashMap<Pair<Integer,Integer>, Integer> intervalMap);
-    void guiUpdateEnd();
+    void analyzeEnded();
 }
 
 

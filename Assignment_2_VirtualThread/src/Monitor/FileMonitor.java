@@ -10,13 +10,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class FileMonitor {
 
     private final TreeSet<Pair<File, Long>> fileLengthMap;
-    private final List<ModelObserver> observers;
     private final Lock lock;
-    private boolean isAvailable;
+    private final List<ModelObserver> observers = new ArrayList<>();
 
     public FileMonitor(){
         this.lock = new ReentrantLock();
-        this.isAvailable = true;
         this.fileLengthMap = new TreeSet<>((o1, o2) -> {
             int countCompare = o2.getY().compareTo(o1.getY());
             if (countCompare == 0){
@@ -24,7 +22,6 @@ public class FileMonitor {
             }
             return countCompare;
         });
-        this.observers = new ArrayList<>();
     }
 
     public void clearMap(){
@@ -40,11 +37,17 @@ public class FileMonitor {
         } finally {
             lock.unlock();
         }
-
     }
 
     public TreeSet<Pair<File,Long>> getFileLengthMap() {
-        return (TreeSet<Pair<File, Long>>) this.fileLengthMap.clone();
+        TreeSet<Pair<File, Long>> res = null;
+        try {
+            lock.lock();
+            res = new TreeSet<>(this.fileLengthMap);
+        } finally {
+            lock.unlock();
+        }
+        return res;
     }
 
     public void addObserver(ModelObserver obs){
@@ -56,4 +59,5 @@ public class FileMonitor {
             obs.modelFileUpdated(this);
         }
     }
+
 }

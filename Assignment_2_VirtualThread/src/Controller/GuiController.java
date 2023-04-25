@@ -1,63 +1,32 @@
 package Controller;
 
 import Monitor.*;
-import Threads.ControllerThread;
-import Threads.DirectoryThread;
 import utility.Pair;
 
 import java.io.File;
 import java.util.*;
 
+
 public class GuiController implements Runnable, ModelObserver{
 
-    private final FileMonitor fileMonitor;
-    private final IntervalMonitor intervalMonitor;
-    private ControllerThread controller;
     private boolean running;
     private TreeSet<Pair<File, Long>> fileLengthMap;
     private HashMap<Pair<Integer,Integer>, Integer> intervalMap;
     private final List<GuiObserver> observers;
 
-    public GuiController(final FileMonitor fileMonitor, final IntervalMonitor intervalMonitor){
-        this.fileMonitor = fileMonitor;
-        this.intervalMonitor = intervalMonitor;
+    public GuiController(){
 
-        this.fileMonitor.addObserver(this);
-        this.intervalMonitor.addObserver(this);
-
-        this.running = false;
+        this.running = true;
         this.observers = new ArrayList<>();
     }
 
-    public void processEvent(final String D, final int N, final int MAXL, final int NI){
-        try {
-            this.running = true;
-            new Thread(() -> {
-                try {
-                    this.fileMonitor.clearMap();
-                    this.intervalMonitor.initMap(MAXL, NI);
-
-                    this.controller = new ControllerThread();
-                    Thread tDir = new Thread(controller);
-
-                    this.controller.addThread(new Thread(new DirectoryThread(D, fileMonitor, intervalMonitor, controller)));
-                    tDir.start();
-                    tDir.join();
-                    this.running = false;
-
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            }).start();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public void processStop(){
+        this.running = false;
+        Thread.currentThread().interrupt();
     }
 
-    public void processStop(){
-       this.controller.stopThreads();
-       this.running = false;
-       Thread.currentThread().interrupt();
+    public void processStart(){
+        this.running = true;
     }
 
     @Override
@@ -99,7 +68,8 @@ public class GuiController implements Runnable, ModelObserver{
 
     private synchronized void notifyEndObservers(){
         for (GuiObserver obs: observers){
-            obs.guiUpdateEnd();
+            obs.analyzeEnded();
         }
     }
 }
+

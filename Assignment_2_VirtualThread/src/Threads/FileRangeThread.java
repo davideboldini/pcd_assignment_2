@@ -28,8 +28,7 @@ public class FileRangeThread implements Runnable{
             Long numRows = this.countNumRows(file);
             this.fileMonitor.addFile(file, numRows);
             this.intervalMonitor.addElementInInterval(numRows);
-        } catch (Exception ignored){
-        }
+        } catch (Exception ignored){}
     }
 
     private Long countNumRows(final File file) throws IOException {

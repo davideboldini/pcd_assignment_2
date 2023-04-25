@@ -1,16 +1,26 @@
 package GUI;
 
-import Controller.GuiController;
+//import Controller.GuiController;
+import Model.Directory;
 import Monitor.GuiObserver;
+import Monitor.ModelObserver;
+import Threads.UpdateGuiThread;
+import utility.Analyser.SourceAnalyzer;
+import utility.Analyser.SourceAnalyzerImpl;
 import utility.Pair;
 
 import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class GuiForm implements GuiObserver  {
+public class GuiForm implements GuiObserver {
 
 	private final JFrame frame;
 	private final JTextArea textAreaInterval;
@@ -18,11 +28,14 @@ public class GuiForm implements GuiObserver  {
 	private final JButton btnStop;
 	private final JButton btnSearch;
 	private int N;
+	private final SourceAnalyzer sourceAnalyzer;
 
 	/**
 	 * Create the application.
 	 */
-	public GuiForm(final GuiController guiController) {
+	public GuiForm() {
+
+		sourceAnalyzer = new SourceAnalyzerImpl(this);
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 922, 520);
@@ -131,9 +144,12 @@ public class GuiForm implements GuiObserver  {
 				textAreaInterval.setText("");
 				textAreaInterval.setEditable(true);
 
-				Thread t = new Thread(guiController);
-				guiController.processEvent(textFieldDirectory.getText(), N, Integer.parseInt(textFieldMaxLength.getText()), (Integer) spinnerNumInterval.getValue());
-				t.start();
+				sourceAnalyzer.initSource(textMaxLength, numInterval, N);
+				try {
+					sourceAnalyzer.analyzeSources(new Directory(textFieldDirectory.getText()));
+				} catch (InterruptedException ex) {
+					throw new RuntimeException(ex);
+				}
 
 				btnSearch.setEnabled(false);
 				btnStop.setEnabled(true);
@@ -147,7 +163,7 @@ public class GuiForm implements GuiObserver  {
 			btnStop.setEnabled(false);
 			btnSearch.setEnabled(true);
 
-			guiController.processStop();
+			sourceAnalyzer.stopAnalyze();
 
 			textAreaFileLength.setEditable(false);
 			textAreaInterval.setEditable(false);
@@ -156,7 +172,7 @@ public class GuiForm implements GuiObserver  {
 		btnStop.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnStop.setBounds(476, 180, 104, 35);
 		frame.getContentPane().add(btnStop);
-		
+
 		JScrollPane scrollPane = new JScrollPane(textAreaInterval);
 		scrollPane.setBounds(470, 279, 406, 171);
 		frame.getContentPane().add(scrollPane);
@@ -165,16 +181,21 @@ public class GuiForm implements GuiObserver  {
 		lblNRowsFile.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNRowsFile.setBounds(10, 129, 208, 23);
 		frame.getContentPane().add(lblNRowsFile);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane(textAreaFileLength);
 		scrollPane_1.setBounds(25, 279, 431, 171);
 		frame.getContentPane().add(scrollPane_1);
 	}
 
+	public void setVisible(final boolean visible){
+		frame.setVisible(visible);
+	}
+
+
+
 	@Override
 	public void guiFileLengthUpdated(TreeSet<Pair<File, Long>> fileLengthMap) {
 		try {
-			//System.out.println("[View] model updated => updating the view");
 			SwingUtilities.invokeLater(() -> {
 				if (fileLengthMap.size() > N){
 					textAreaFileLength.setText("");
@@ -207,7 +228,7 @@ public class GuiForm implements GuiObserver  {
 	}
 
 	@Override
-	public void guiUpdateEnd() {
+	public void analyzeEnded() {
 		try {
 			SwingUtilities.invokeLater(() -> {
 				JOptionPane.showMessageDialog(frame, "Elaborazione terminata","Completato", JOptionPane.PLAIN_MESSAGE);
@@ -218,9 +239,4 @@ public class GuiForm implements GuiObserver  {
 			e.printStackTrace();
 		}
 	}
-
-	public void setVisible(final boolean visible){
-		frame.setVisible(visible);
-	}
-
 }

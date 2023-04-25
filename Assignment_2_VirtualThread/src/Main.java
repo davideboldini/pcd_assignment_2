@@ -1,18 +1,22 @@
-import Controller.GuiController;
+
 import GUI.GuiForm;
+import Model.Directory;
 import Monitor.FileMonitor;
 import Monitor.IntervalMonitor;
 import Threads.ControllerThread;
 import Threads.DirectoryThread;
+import utility.Analyser.SourceAnalyzer;
+import utility.Analyser.SourceAnalyzerImpl;
 import utility.Chrono;
+import utility.Pair;
 
+import java.io.File;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
-        final FileMonitor fileMonitor;
-        final IntervalMonitor intervalMonitor;
+        SourceAnalyzer sourceAnalyzer = new SourceAnalyzerImpl();
 
         Scanner scan = new Scanner(System.in);
 
@@ -41,36 +45,24 @@ public class Main {
 
             System.out.println("Calcolo in corso...\n");
 
-            fileMonitor = new FileMonitor();
-            intervalMonitor = new IntervalMonitor(MAXL, NI);
 
-            final ControllerThread controller = new ControllerThread();
-            final Thread tController = Thread.ofVirtual().unstarted(controller);
             final Chrono chrono = new Chrono();
+
+            sourceAnalyzer.initSource(MAXL, NI, N);
 
             chrono.start();
 
-            Runnable r = new DirectoryThread(D, fileMonitor, intervalMonitor, controller);
-            Thread t = Thread.ofVirtual().unstarted(r);
-            controller.addThread(t);
-
-            tController.start();
-            tController.join();
+            Pair<Map<Pair<Integer, Integer>, Integer>, List<Pair<File,Long>>> report = sourceAnalyzer.getReport(new Directory(D));
 
             chrono.stop();
 
-            System.out.println(fileMonitor.getFileLengthMap().stream().toList().subList(0, N));
-            System.out.println(intervalMonitor.getIntervalMap());
+            System.out.println(report.getY());
+            System.out.println(report.getX());
             System.out.println("Tempo impiegato: " + chrono.getTime());
             System.out.println("Termine programma");
         } else if(choose == 2){
             System.out.println("Selezionato: GUI");
-            fileMonitor = new FileMonitor();
-            intervalMonitor = new IntervalMonitor();
-            GuiController guiController = new GuiController(fileMonitor, intervalMonitor);
-            GuiForm window = new GuiForm(guiController);
-
-            guiController.addObserver(window);
+            GuiForm window = new GuiForm();
             window.setVisible(true);
         }else {
             System.out.println("Errore: Input errato");
