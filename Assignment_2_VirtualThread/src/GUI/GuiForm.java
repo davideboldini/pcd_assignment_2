@@ -3,8 +3,6 @@ package GUI;
 //import Controller.GuiController;
 import Model.Directory;
 import Monitor.GuiObserver;
-import Monitor.ModelObserver;
-import Threads.UpdateGuiThread;
 import utility.Analyser.SourceAnalyzer;
 import utility.Analyser.SourceAnalyzerImpl;
 import utility.Pair;
@@ -16,9 +14,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class GuiForm implements GuiObserver {
 
