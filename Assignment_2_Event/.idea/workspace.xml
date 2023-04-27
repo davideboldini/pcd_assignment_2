@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Model/Directory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Chrono.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Pair.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Sort.java" beforeDir="false" />
+    <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="fixed gradle project">
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/DirectoryAgent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageDirectory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageFile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageFileLength.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Utility/Codec/GenericCodec.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +25,13 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -38,9 +46,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/david/Desktop/VisualVM/visualvm_215/bin/visualvm.exe",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_2/Assignment_2_Task",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
 }]]></component>
@@ -53,6 +63,29 @@
       <option name="presentableId" value="Default" />
       <updated>1682584200227</updated>
     </task>
+    <task id="LOCAL-00001" summary="fixed gradle project">
+      <created>1682584612506</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682584612506</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed gradle project" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed gradle project" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/assignment/Agent/DirectoryAgent.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
