@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad0be0df-119d-4555-978c-cd3ea05d5424" name="Changes" comment="removed useless class">
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/.idea/git_toolbox_prj.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/DirectoryAgent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Message/MessageDirectory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Message/MessageFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Message/MessageFileLength.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Utility/Codec/GenericCodec.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/FileAgent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/FileLengthAgent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/IntervalAgent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Message/MessageInitInterval.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/DirectoryAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/DirectoryAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
