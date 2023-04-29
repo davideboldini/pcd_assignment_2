@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="added directory message communication">
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileAgent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileLengthAgent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/IntervalAgent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageInitInterval.java" afterDir="false" />
+    <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="added interval agent">
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/GuiUpdateAgent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/GUI/GuiForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageGuiUpdate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/DirectoryAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/DirectoryAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileLengthAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileLengthAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -25,6 +24,31 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Assignment_2_Event" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Assignment_2_Event" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -33,7 +57,21 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <branch-grouping />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="6b2fe1dd-bb80-4ef5-a96f-5172d9c6058c" />
+        <option name="url" value="https://github.com/davideboldini/pcd_assignment_2.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -53,6 +91,11 @@
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="assignment.GUI" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -76,23 +119,31 @@
       <option name="project" value="LOCAL" />
       <updated>1682598304087</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added interval agent">
+      <created>1682616206431</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682616206431</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fixed gradle project" />
     <MESSAGE value="added directory message communication" />
-    <option name="LAST_COMMIT_MESSAGE" value="added directory message communication" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java</url>
-          <line>67</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="added interval agent" />
+    <option name="LAST_COMMIT_MESSAGE" value="added interval agent" />
   </component>
 </project>

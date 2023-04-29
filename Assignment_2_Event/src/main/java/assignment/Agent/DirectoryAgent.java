@@ -16,7 +16,7 @@ public class DirectoryAgent extends AbstractVerticle {
     @Override
     public void start(final Promise<Void> startPromise){
 
-        System.out.println("Directory agent started");
+        //System.out.println("Directory agent started");
         EventBus eventBus = this.getVertx().eventBus();
         eventBus.consumer("directory-topic", (Message<MessageDirectory> message) -> {
             MessageDirectory mexDir = message.body();
