@@ -1,6 +1,7 @@
 package assignment.Agent;
 
 import assignment.Message.MessageFileLength;
+import assignment.Message.MessageGuiUpdate;
 import assignment.Message.MessageInitInterval;
 import assignment.Utility.Pair;
 import io.vertx.core.AbstractVerticle;
@@ -11,6 +12,7 @@ import io.vertx.core.eventbus.Message;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeSet;
 
 public class IntervalAgent extends AbstractVerticle {
 
@@ -28,7 +30,11 @@ public class IntervalAgent extends AbstractVerticle {
 
         eventBus.consumer("interval-topic", (Message<MessageFileLength> message) -> {
             MessageFileLength mex = message.body();
-            this.addMap(mex.getFileLength());
+
+            for (Long numRows: mex.getFileLength()) {
+                this.addMap(numRows);
+            }
+            eventBus.publish("gui-update-topic",  new MessageGuiUpdate(new HashMap<>(intervalMap), "Interval mex"));
         });
 
         startPromise.complete();
@@ -59,5 +65,11 @@ public class IntervalAgent extends AbstractVerticle {
 
     private void addMap(final Long numRows){
         this.intervalMap.keySet().stream().filter(interval -> numRows < interval.getY() || (numRows >= interval.getX() && interval.getY().equals(-1))).findFirst().ifPresent(interval -> intervalMap.put(interval, intervalMap.get(interval) + 1));
+    }
+
+    @Override
+    public void stop(){
+        //System.out.println(vertx.deploymentIDs().size());
+        System.out.println("Stopped interval agent");
     }
 }

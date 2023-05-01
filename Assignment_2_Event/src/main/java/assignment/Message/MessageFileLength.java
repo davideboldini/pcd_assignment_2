@@ -1,14 +1,17 @@
 package assignment.Message;
 
+import java.io.File;
+import java.util.List;
+
 public class MessageFileLength {
 
-    private Long fileLength;
+    private List<Long> fileLengthList;
 
-    public MessageFileLength(final Long fileLength){
-        this.fileLength = fileLength;
+    public MessageFileLength(final List<Long> fileLengthList){
+        this.fileLengthList = fileLengthList;
     }
 
-    public Long getFileLength(){
-        return this.fileLength;
+    public List<Long> getFileLength(){
+        return this.fileLengthList;
     }
 }

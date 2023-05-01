@@ -1,12 +1,21 @@
-package assignment.GUI;
+package assignment.Agent.GUI;
 
+import assignment.Message.MessageGuiUpdate;
+import assignment.Model.Directory;
 import assignment.Utility.Analyser.SourceAnalyzerImpl;
+import assignment.Utility.Pair;
+import com.google.common.collect.Iterables;
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.eventbus.EventBus;
+import io.vertx.core.eventbus.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.HashMap;
+import java.util.TreeSet;
 
-public class GuiForm {
+public class GuiFormAgent extends AbstractVerticle {
 
 	private final JFrame frame;
 	private final JTextArea textAreaInterval;
@@ -19,9 +28,9 @@ public class GuiForm {
 	/**
 	 * Create the application.
 	 */
-	public GuiForm() {
+	public GuiFormAgent(final SourceAnalyzerImpl sourceAnalyzer) {
 
-		sourceAnalyser = new SourceAnalyzerImpl();
+		this.sourceAnalyser = sourceAnalyzer;
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 922, 520);
@@ -29,7 +38,7 @@ public class GuiForm {
 		frame.getContentPane().setLayout(null);
 
 
-		JLabel lblTitle = new JLabel("Progetto 2 - Task");
+		JLabel lblTitle = new JLabel("Progetto 2 - Event Loop");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTitle.setBounds(10, 0, 913, 35);
@@ -121,6 +130,7 @@ public class GuiForm {
 			int textMaxLength = Integer.parseInt(textFieldMaxLength.getText());
 			int numInterval = (Integer)spinnerNumInterval.getValue();
 			N = (Integer)spinnerNumRowsFile.getValue();
+			Directory d = new Directory(textFieldDirectory.getText());
 
 			if (textMaxLength < numInterval && textMaxLength % numInterval != 0)
 				JOptionPane.showMessageDialog(frame, "Numero di intervalli e/o lunghezza massima errati","Errore", JOptionPane.ERROR_MESSAGE);
@@ -130,6 +140,9 @@ public class GuiForm {
 
 				textAreaInterval.setText("");
 				textAreaInterval.setEditable(true);
+
+				sourceAnalyser.restartVertx();
+				sourceAnalyser.analyzeSources(d, textMaxLength, numInterval, this);
 
 				btnSearch.setEnabled(false);
 				btnStop.setEnabled(true);
@@ -141,8 +154,9 @@ public class GuiForm {
 
 		btnStop.addActionListener(e -> {
 			btnStop.setEnabled(false);
-
 			btnSearch.setEnabled(true);
+
+			sourceAnalyser.stopExecution();
 
 			textAreaFileLength.setEditable(false);
 			textAreaInterval.setEditable(false);
@@ -171,4 +185,51 @@ public class GuiForm {
 		frame.setVisible(visible);
 	}
 
+	@Override
+	public void start(){
+		System.out.println("Gui form agent started");
+		EventBus eventBus = sourceAnalyser.getVertx().eventBus();
+
+		eventBus.consumer("gui-update-topic", (Message<MessageGuiUpdate> message) -> {
+			MessageGuiUpdate mex = message.body();
+			if (mex.getTypeMessage().equals("File length mex")) {
+				TreeSet<Pair<File, Long>> fileLengthTree = mex.getFileLengthMap();
+				this.setFileLengthGui(fileLengthTree);
+			} else {
+				HashMap<Pair<Integer, Integer>, Integer> intervalMap = mex.getIntervalMap();
+				this.setIntervalGui(intervalMap);
+			}
+		});
+	}
+
+
+	private void setFileLengthGui(final TreeSet<Pair<File, Long>> fileTree){
+		try {
+			SwingUtilities.invokeLater(() -> {
+				if (fileTree.size() > N) {
+					textAreaFileLength.setText("");
+					Iterables.limit(fileTree, N).forEach(pair -> textAreaFileLength.setText(textAreaFileLength.getText() + "\n" + "File: " + pair.getX().getName() + " - Len: " + pair.getY() + "\n"));
+				}
+			});
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	private void setIntervalGui(final HashMap<Pair<Integer, Integer>, Integer> intervalMap){
+		try {
+			SwingUtilities.invokeLater(() -> {
+				textAreaInterval.setText("");
+				intervalMap.forEach((key, value) -> {
+					if (key.getY().equals(-1)) {
+						textAreaInterval.setText(textAreaInterval.getText() + "Intervallo [ " + key.getX() + " - inf ]: " + value + "\n");
+					} else {
+						textAreaInterval.setText(textAreaInterval.getText() + "Intervallo [ " + key.getX() + " - " + key.getY() + " ]: " + value + "\n");
+					}
+				});
+			});
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 }
