@@ -1,7 +1,7 @@
 package assignment.Agent;
 
 import assignment.Message.MessageFileLength;
-import assignment.Message.MessageGuiUpdate;
+import assignment.Message.MessageUpdate;
 import assignment.Message.MessageInitInterval;
 import assignment.Utility.Pair;
 import io.vertx.core.AbstractVerticle;
@@ -12,7 +12,6 @@ import io.vertx.core.eventbus.Message;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeSet;
 
 public class IntervalAgent extends AbstractVerticle {
 
@@ -34,7 +33,11 @@ public class IntervalAgent extends AbstractVerticle {
             for (Long numRows: mex.getFileLength()) {
                 this.addMap(numRows);
             }
-            eventBus.publish("gui-update-topic",  new MessageGuiUpdate(new HashMap<>(intervalMap), "Interval mex"));
+            eventBus.publish("gui-update-topic",  new MessageUpdate(new HashMap<>(intervalMap), "Interval mex"));
+        });
+
+        eventBus.consumer("get-interval-topic", res -> {
+            eventBus.publish("return-topic", new MessageUpdate(new HashMap<>(intervalMap), "Interval mex"));
         });
 
         startPromise.complete();

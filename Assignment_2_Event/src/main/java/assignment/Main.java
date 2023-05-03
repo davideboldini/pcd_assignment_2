@@ -3,8 +3,15 @@ package assignment;
 import assignment.Agent.GUI.GuiFormAgent;
 import assignment.Model.Directory;
 import assignment.Utility.Analyser.SourceAnalyzerImpl;
+import assignment.Utility.Pair;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
+import io.vertx.core.Promise;
 
+import java.io.File;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Main {
 
@@ -21,7 +28,7 @@ public class Main {
             System.out.println("Selezionato: Riga di comando");
 
             //System.out.println("Inserisci percorso: ");
-            final String D = "C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_1/TestFolder2"; //args[0] - Percorso iniziale
+            final String D = "C:/Users/david/Desktop/TestFolder2"; //args[0] - Percorso iniziale
             //String D = scan.nextLine();
             //D = D.replace("\\", "/");
 
@@ -39,7 +46,22 @@ public class Main {
 
             System.out.println("Calcolo in corso...\n");
 
-            sourceAnalyzer.getReport(new Directory(D), MAXL, NI);
+
+            Pair<Promise<TreeSet<Pair<File, Long>>>,Promise<Map<Pair<Integer,Integer>, Integer>>> res = sourceAnalyzer.getReport(new Directory(D), MAXL, NI);
+
+            Future<Map<Pair<Integer,Integer>, Integer>> futInterval = res.getY().future();
+            Future<TreeSet<Pair<File, Long>>> futFileTree = res.getX().future();
+
+            futInterval
+                    .onSuccess(System.out::println);
+
+            futFileTree
+                    .onSuccess((TreeSet<Pair<File, Long>> fileTree) -> {
+                        System.out.println(fileTree.stream().toList().subList(0, N));
+                    });
+
+
+
         }else if(choose == 2){
             System.out.println("Selezionato: GUI");
             GuiFormAgent window = new GuiFormAgent(sourceAnalyzer);

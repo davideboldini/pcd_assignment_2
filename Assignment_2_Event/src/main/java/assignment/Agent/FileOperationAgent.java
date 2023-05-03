@@ -2,7 +2,7 @@ package assignment.Agent;
 
 import assignment.Message.MessageFile;
 import assignment.Message.MessageFileLength;
-import assignment.Message.MessageGuiUpdate;
+import assignment.Message.MessageUpdate;
 import assignment.Utility.Pair;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -13,16 +13,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 public class FileOperationAgent extends AbstractVerticle {
 
-
     private TreeSet<Pair<File, Long>> fileLengthTree;
     private List<Long> fileLengthList;
-
 
     @Override
     public void start(final Promise<Void> startPromise) {
@@ -42,9 +38,14 @@ public class FileOperationAgent extends AbstractVerticle {
                 fileLengthList.add(numRows);
             }
 
+            eventBus.publish("remove-dir-topic", null);
             eventBus.publish("interval-topic", new MessageFileLength(fileLengthList));
-            eventBus.publish("gui-update-topic",  new MessageGuiUpdate(new TreeSet<>(fileLengthTree), "File length mex"));
+            eventBus.publish("gui-update-topic",  new MessageUpdate(new TreeSet<>(fileLengthTree), "File length mex"));
 
+        });
+
+        eventBus.consumer("get-fileTree-topic", res -> {
+            eventBus.publish("return-topic", new MessageUpdate(new TreeSet<>(fileLengthTree), "File length mex"));
         });
 
         startPromise.complete();

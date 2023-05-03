@@ -1,6 +1,6 @@
 package assignment.Agent.GUI;
 
-import assignment.Message.MessageGuiUpdate;
+import assignment.Message.MessageUpdate;
 import assignment.Model.Directory;
 import assignment.Utility.Analyser.SourceAnalyzerImpl;
 import assignment.Utility.Pair;
@@ -58,7 +58,7 @@ public class GuiFormAgent extends AbstractVerticle {
 		textFieldDirectory.setBackground(Color.WHITE);
 		textFieldDirectory.setEditable(false);
 		textFieldDirectory.setBounds(88, 69, 257, 20);
-		textFieldDirectory.setText("C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_1/TestFolder2");
+		textFieldDirectory.setText("C:/Users/david/Desktop/TestFolder2");
 		frame.getContentPane().add(textFieldDirectory);
 		textFieldDirectory.setColumns(10);
 
@@ -190,8 +190,8 @@ public class GuiFormAgent extends AbstractVerticle {
 		System.out.println("Gui form agent started");
 		EventBus eventBus = sourceAnalyser.getVertx().eventBus();
 
-		eventBus.consumer("gui-update-topic", (Message<MessageGuiUpdate> message) -> {
-			MessageGuiUpdate mex = message.body();
+		eventBus.consumer("gui-update-topic", (Message<MessageUpdate> message) -> {
+			MessageUpdate mex = message.body();
 			if (mex.getTypeMessage().equals("File length mex")) {
 				TreeSet<Pair<File, Long>> fileLengthTree = mex.getFileLengthMap();
 				this.setFileLengthGui(fileLengthTree);
@@ -199,6 +199,10 @@ public class GuiFormAgent extends AbstractVerticle {
 				HashMap<Pair<Integer, Integer>, Integer> intervalMap = mex.getIntervalMap();
 				this.setIntervalGui(intervalMap);
 			}
+		});
+
+		eventBus.consumer("guiEnd-topic", res -> {
+			this.setEndGui();
 		});
 	}
 
@@ -230,6 +234,18 @@ public class GuiFormAgent extends AbstractVerticle {
 			});
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+	}
+
+	private void setEndGui(){
+		try {
+			SwingUtilities.invokeLater(() -> {
+				JOptionPane.showMessageDialog(frame, "Elaborazione terminata","Completato", JOptionPane.PLAIN_MESSAGE);
+				btnStop.setEnabled(false);
+				btnSearch.setEnabled(true);
+			});
+		} catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 }

@@ -5,20 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="added gui agent">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileOperationAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/ControllerAgent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageInterval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/DirectoryAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/DirectoryAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileAgent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileLengthAgent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/GuiUpdateAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileOperationAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/IntervalAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/IntervalAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/GUI/GuiForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageFileLength.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageFileLength.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageGuiUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageUpdate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -169,19 +165,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java</url>
-          <line>160</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java</url>
-          <line>195</line>
-          <option name="timeStamp" value="12" />
+          <url>file://$PROJECT_DIR$/src/main/java/assignment/Agent/FileOperationAgent.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

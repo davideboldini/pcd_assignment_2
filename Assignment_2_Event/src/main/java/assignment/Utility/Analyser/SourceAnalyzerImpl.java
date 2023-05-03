@@ -6,10 +6,15 @@ import assignment.Agent.GUI.GuiFormAgent;
 import assignment.Message.*;
 import assignment.Model.Directory;
 import assignment.Utility.Codec.GenericCodec;
-import io.vertx.core.DeploymentOptions;
-import io.vertx.core.Vertx;
+import assignment.Utility.Pair;
+import io.vertx.core.*;
+import io.vertx.core.eventbus.Message;
 
-public class SourceAnalyzerImpl implements SourceAnalyzer{
+import java.io.File;
+import java.util.Map;
+import java.util.TreeSet;
+
+public class SourceAnalyzerImpl implements SourceAnalyzer {
 
     private Vertx vertx = Vertx.vertx();
 
@@ -34,13 +39,12 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
         vertx.eventBus().registerDefaultCodec(MessageInitInterval.class,
                 new GenericCodec<MessageInitInterval>(MessageInitInterval.class));
 
-        vertx.eventBus().registerDefaultCodec(MessageGuiUpdate.class,
-                new GenericCodec<MessageGuiUpdate>(MessageGuiUpdate.class));
+        vertx.eventBus().registerDefaultCodec(MessageUpdate.class,
+                new GenericCodec<MessageUpdate>(MessageUpdate.class));
     }
 
     private void deployIntervalVerticle(final int MAXL, final int NI){
-        DeploymentOptions options = new DeploymentOptions().setWorker(true);
-        vertx.deployVerticle(new IntervalAgent(), options, res -> {
+        vertx.deployVerticle(new IntervalAgent(), res -> {
             System.out.println("Interval Verticle created");
             vertx.eventBus().publish("init-interval-topic", new MessageInitInterval(MAXL, NI));
         });
@@ -56,7 +60,6 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
             System.out.println("File Length Verticle created");
         });
 
-
         vertx.deployVerticle(new DirectoryAgent(), res -> {
             System.out.println("Directory Verticle created");
             System.out.println("Send message in directory-topic");
@@ -64,27 +67,48 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
         });
     }
 
-    public void getReport(final Directory d, final int MAXL, final int NI){
+    private void deployControllerVerticle(){
+        vertx.deployVerticle(new ControllerAgent(), res -> {
+            System.out.println("Controller Verticle created");
 
+        });
+    }
+
+    public Pair<Promise<TreeSet<Pair<File, Long>>>,Promise<Map<Pair<Integer,Integer>, Integer>>> getReport(final Directory d, final int MAXL, final int NI){
+
+        Promise<Map<Pair<Integer,Integer>, Integer>> intervalMapPromise = Promise.promise();
+        Promise<TreeSet<Pair<File, Long>>> fileTreePromise = Promise.promise();
+
+        this.deployControllerVerticle();
         this.deployIntervalVerticle(MAXL, NI);
         this.deployDirectoryVerticles(d);
 
+        this.getVertx().eventBus().consumer("return-topic", (Message<MessageUpdate> message) -> {
+            MessageUpdate mex = message.body();
+            if (mex.getTypeMessage().equals("File length mex")) {
+                fileTreePromise.complete(mex.getFileLengthMap());
+            } else {
+                intervalMapPromise.complete(mex.getIntervalMap());
+            }
+        });
+
+        return new Pair<>(fileTreePromise, intervalMapPromise);
+
     }
 
-    public void analyzeSources(Directory d, final int MAXL, final int NI, final GuiFormAgent guiForm) {
-
+    public void analyzeSources(final Directory d, final int MAXL, final int NI, final GuiFormAgent guiForm) {
+        this.deployControllerVerticle();
         this.deployGuiVerticle(guiForm);
         this.deployIntervalVerticle(MAXL, NI);
         this.deployDirectoryVerticles(d);
-
     }
 
     public void stopExecution(){
-        vertx.close();
+        this.vertx.close();
     }
 
     public void restartVertx(){
-        vertx = Vertx.vertx();
+        this.vertx = Vertx.vertx();
         this.initCodec();
     }
 

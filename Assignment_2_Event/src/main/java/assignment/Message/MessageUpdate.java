@@ -6,18 +6,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-public class MessageGuiUpdate {
+public class MessageUpdate {
 
     private TreeSet<Pair<File, Long>> fileLengthMap = null;
     private HashMap<Pair<Integer,Integer>, Integer> intervalMap = null;
     private final String typeMessage;
 
-    public MessageGuiUpdate(final TreeSet<Pair<File, Long>> fileLengthMap, final String typeMessage){
+    public MessageUpdate(final TreeSet<Pair<File, Long>> fileLengthMap, final String typeMessage){
         this.fileLengthMap = fileLengthMap;
         this.typeMessage = typeMessage;
     }
 
-    public MessageGuiUpdate(final HashMap<Pair<Integer, Integer>, Integer> intervalMap, final String typeMessage){
+    public MessageUpdate(final HashMap<Pair<Integer, Integer>, Integer> intervalMap, final String typeMessage){
         this.intervalMap = intervalMap;
         this.typeMessage = typeMessage;
     }
