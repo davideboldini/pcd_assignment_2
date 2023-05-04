@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class MessageInterval {
 
-    private Map<Pair<Integer,Integer>, Integer> intervalMap;
+    private final Map<Pair<Integer,Integer>, Integer> intervalMap;
 
     public MessageInterval(final Map<Pair<Integer,Integer>, Integer> intervalMap){
         this.intervalMap = intervalMap;

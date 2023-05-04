@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MessageFileLength {
 
-    private List<Long> fileLengthList;
+    private final List<Long> fileLengthList;
 
     public MessageFileLength(final List<Long> fileLengthList){
         this.fileLengthList = fileLengthList;

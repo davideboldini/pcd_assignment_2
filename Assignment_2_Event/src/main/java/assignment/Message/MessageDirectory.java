@@ -4,7 +4,7 @@ import assignment.Model.Directory;
 
 public class MessageDirectory {
 
-    private Directory directory;
+    private final Directory directory;
 
     public MessageDirectory(final Directory directory){
         this.directory = directory;

@@ -72,7 +72,6 @@ public class IntervalAgent extends AbstractVerticle {
 
     @Override
     public void stop(){
-        //System.out.println(vertx.deploymentIDs().size());
         System.out.println("Stopped interval agent");
     }
 }

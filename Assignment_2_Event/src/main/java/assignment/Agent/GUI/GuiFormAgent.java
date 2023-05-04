@@ -2,7 +2,7 @@ package assignment.Agent.GUI;
 
 import assignment.Message.MessageUpdate;
 import assignment.Model.Directory;
-import assignment.Utility.Analyser.SourceAnalyzerImpl;
+import assignment.Utility.Analyser.SourceAnalyzer;
 import assignment.Utility.Pair;
 import com.google.common.collect.Iterables;
 import io.vertx.core.AbstractVerticle;
@@ -23,12 +23,12 @@ public class GuiFormAgent extends AbstractVerticle {
 	private final JButton btnStop;
 	private final JButton btnSearch;
 	private int N;
-	private final SourceAnalyzerImpl sourceAnalyser;
+	private final SourceAnalyzer sourceAnalyser;
 
 	/**
 	 * Create the application.
 	 */
-	public GuiFormAgent(final SourceAnalyzerImpl sourceAnalyzer) {
+	public GuiFormAgent(final SourceAnalyzer sourceAnalyzer) {
 
 		this.sourceAnalyser = sourceAnalyzer;
 
@@ -205,7 +205,6 @@ public class GuiFormAgent extends AbstractVerticle {
 			this.setEndGui();
 		});
 	}
-
 
 	private void setFileLengthGui(final TreeSet<Pair<File, Long>> fileTree){
 		try {

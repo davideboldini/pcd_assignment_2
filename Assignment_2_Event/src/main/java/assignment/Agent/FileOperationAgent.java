@@ -18,19 +18,21 @@ import java.util.*;
 public class FileOperationAgent extends AbstractVerticle {
 
     private TreeSet<Pair<File, Long>> fileLengthTree;
-    private List<Long> fileLengthList;
+
+    public FileOperationAgent(){
+        this.initTreeSet();
+    }
 
     @Override
     public void start(final Promise<Void> startPromise) {
         System.out.println("File operation agent started");
-        this.initTreeSet();
 
         EventBus eventBus = this.getVertx().eventBus();
 
         eventBus.consumer("file-topic", (Message<MessageFile> message) -> {
             MessageFile mex = message.body();
 
-            this.fileLengthList = new ArrayList<>();
+            List<Long> fileLengthList = new ArrayList<>();
 
             for (File file: mex.getListFile()) {
                 Long numRows = this.countNumRows(file);
@@ -71,7 +73,6 @@ public class FileOperationAgent extends AbstractVerticle {
 
     @Override
     public void stop(){
-        //System.out.println(vertx.deploymentIDs().size());
         System.out.println("Stopped file operation agent");
     }
 }

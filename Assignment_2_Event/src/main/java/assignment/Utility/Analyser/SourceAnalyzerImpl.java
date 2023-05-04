@@ -22,6 +22,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
         this.initCodec();
     }
 
+    @Override
     public Vertx getVertx(){
         return this.vertx;
     }
@@ -50,12 +51,13 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
         });
     }
 
-    public void deployGuiVerticle(final GuiFormAgent guiForm){
+    private void deployGuiVerticle(final GuiFormAgent guiForm){
         DeploymentOptions options = new DeploymentOptions().setWorker(true);
         vertx.deployVerticle(guiForm, options);
     }
 
     private void deployDirectoryVerticles(final Directory d){
+
         vertx.deployVerticle(new FileOperationAgent(), res -> {
             System.out.println("File Length Verticle created");
         });
@@ -70,11 +72,11 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
     private void deployControllerVerticle(){
         vertx.deployVerticle(new ControllerAgent(), res -> {
             System.out.println("Controller Verticle created");
-
         });
     }
 
-    public Pair<Promise<TreeSet<Pair<File, Long>>>,Promise<Map<Pair<Integer,Integer>, Integer>>> getReport(final Directory d, final int MAXL, final int NI){
+    @Override
+    public Pair<Promise<TreeSet<Pair<File, Long>>>, Promise<Map<Pair<Integer,Integer>, Integer>>> getReport(final Directory d, final int MAXL, final int NI){
 
         Promise<Map<Pair<Integer,Integer>, Integer>> intervalMapPromise = Promise.promise();
         Promise<TreeSet<Pair<File, Long>>> fileTreePromise = Promise.promise();
@@ -96,6 +98,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
 
     }
 
+    @Override
     public void analyzeSources(final Directory d, final int MAXL, final int NI, final GuiFormAgent guiForm) {
         this.deployControllerVerticle();
         this.deployGuiVerticle(guiForm);
@@ -103,10 +106,12 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
         this.deployDirectoryVerticles(d);
     }
 
+    @Override
     public void stopExecution(){
         this.vertx.close();
     }
 
+    @Override
     public void restartVertx(){
         this.vertx = Vertx.vertx();
         this.initCodec();

@@ -4,17 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="added gui agent">
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/ControllerAgent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageInterval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+    <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="completed event block">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/ControllerAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/ControllerAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/DirectoryAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/DirectoryAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileOperationAgent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileOperationAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/FileOperationAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Agent/IntervalAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Agent/IntervalAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageGuiUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageUpdate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageDirectory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageDirectory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageFileLength.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageFileLength.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Message/MessageInterval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -140,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682760317175</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="completed event block">
+      <created>1683111647250</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683111647250</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -159,22 +167,7 @@
     <MESSAGE value="added directory message communication" />
     <MESSAGE value="added interval agent" />
     <MESSAGE value="added gui agent" />
-    <option name="LAST_COMMIT_MESSAGE" value="added gui agent" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/assignment/Agent/GUI/GuiFormAgent.java</url>
-          <line>204</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/assignment/Agent/FileOperationAgent.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="completed event block" />
+    <option name="LAST_COMMIT_MESSAGE" value="completed event block" />
   </component>
 </project>

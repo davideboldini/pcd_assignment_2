@@ -2,6 +2,7 @@ package assignment;
 
 import assignment.Agent.GUI.GuiFormAgent;
 import assignment.Model.Directory;
+import assignment.Utility.Analyser.SourceAnalyzer;
 import assignment.Utility.Analyser.SourceAnalyzerImpl;
 import assignment.Utility.Pair;
 import io.vertx.core.AsyncResult;
@@ -17,7 +18,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        SourceAnalyzerImpl sourceAnalyzer = new SourceAnalyzerImpl();
+        SourceAnalyzer sourceAnalyzer = new SourceAnalyzerImpl();
 
         Scanner scan = new Scanner(System.in);
 
@@ -59,8 +60,6 @@ public class Main {
                     .onSuccess((TreeSet<Pair<File, Long>> fileTree) -> {
                         System.out.println(fileTree.stream().toList().subList(0, N));
                     });
-
-
 
         }else if(choose == 2){
             System.out.println("Selezionato: GUI");
