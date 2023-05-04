@@ -4,7 +4,6 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.eventbus.EventBus;
 
-
 public class ControllerAgent extends AbstractVerticle {
 
     private int count = 0;
@@ -17,7 +16,7 @@ public class ControllerAgent extends AbstractVerticle {
 
         eventBus.consumer("remove-dir-topic", res -> {
             this.count--;
-            System.out.println("Dir list size: " + count);
+            //System.out.println("Dir list size: " + count);
             if (count == 0){
                 eventBus.publish("get-interval-topic", null);
                 eventBus.publish("get-fileTree-topic", null);

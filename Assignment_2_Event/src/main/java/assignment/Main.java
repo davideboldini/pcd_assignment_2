@@ -4,8 +4,9 @@ import assignment.Agent.GUI.GuiFormAgent;
 import assignment.Model.Directory;
 import assignment.Utility.Analyser.SourceAnalyzer;
 import assignment.Utility.Analyser.SourceAnalyzerImpl;
+import assignment.Utility.Chrono;
 import assignment.Utility.Pair;
-import io.vertx.core.AsyncResult;
+import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
 
@@ -19,6 +20,7 @@ public class Main {
     public static void main(String[] args){
 
         SourceAnalyzer sourceAnalyzer = new SourceAnalyzerImpl();
+        Chrono chrono = new Chrono();
 
         Scanner scan = new Scanner(System.in);
 
@@ -47,19 +49,25 @@ public class Main {
 
             System.out.println("Calcolo in corso...\n");
 
-
-            Pair<Promise<TreeSet<Pair<File, Long>>>,Promise<Map<Pair<Integer,Integer>, Integer>>> res = sourceAnalyzer.getReport(new Directory(D), MAXL, NI);
+            chrono.start();
+            Pair<Promise<TreeSet<Pair<File, Long>>>, Promise<Map<Pair<Integer,Integer>, Integer>>> res = sourceAnalyzer.getReport(new Directory(D), MAXL, NI);
 
             Future<Map<Pair<Integer,Integer>, Integer>> futInterval = res.getY().future();
             Future<TreeSet<Pair<File, Long>>> futFileTree = res.getX().future();
 
-            futInterval
-                    .onSuccess(System.out::println);
+            CompositeFuture.join(futFileTree, futInterval).onComplete(ar -> {
+               if (ar.succeeded()){
 
-            futFileTree
-                    .onSuccess((TreeSet<Pair<File, Long>> fileTree) -> {
-                        System.out.println(fileTree.stream().toList().subList(0, N));
-                    });
+                   chrono.stop();
+
+                   TreeSet<Pair<File,Long>> fileTree = (TreeSet<Pair<File, Long>>) ar.result().list().get(0);
+                   Map<Pair<Integer,Integer>, Integer> mapInterval = (Map<Pair<Integer, Integer>, Integer>) ar.result().list().get(1);
+                   System.out.println(fileTree.stream().toList().subList(0, N));
+                   System.out.println(mapInterval);
+
+                   System.out.println("Tempo impiegato: " + chrono.getTime());
+               }
+            });
 
         }else if(choose == 2){
             System.out.println("Selezionato: GUI");
