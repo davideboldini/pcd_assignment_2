@@ -1,5 +1,6 @@
 package assignment.Message;
 
+import assignment.Message.Type.MessageType;
 import assignment.Utility.Pair;
 
 import java.io.File;
@@ -8,21 +9,21 @@ import java.util.TreeSet;
 
 public class MessageUpdate {
 
-    private TreeSet<Pair<File, Long>> fileLengthMap = null;
-    private HashMap<Pair<Integer,Integer>, Integer> intervalMap = null;
-    private final String typeMessage;
+    private TreeSet<Pair<File, Long>> fileLengthMap;
+    private HashMap<Pair<Integer,Integer>, Integer> intervalMap;
+    private final MessageType typeMessage;
 
-    public MessageUpdate(final TreeSet<Pair<File, Long>> fileLengthMap, final String typeMessage){
+    public MessageUpdate(final TreeSet<Pair<File, Long>> fileLengthMap, final MessageType typeMessage){
         this.fileLengthMap = fileLengthMap;
         this.typeMessage = typeMessage;
     }
 
-    public MessageUpdate(final HashMap<Pair<Integer, Integer>, Integer> intervalMap, final String typeMessage){
+    public MessageUpdate(final HashMap<Pair<Integer, Integer>, Integer> intervalMap, final MessageType typeMessage){
         this.intervalMap = intervalMap;
         this.typeMessage = typeMessage;
     }
 
-    public String getTypeMessage(){
+    public MessageType getTypeMessage(){
         return this.typeMessage;
     }
 

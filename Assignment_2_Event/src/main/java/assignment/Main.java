@@ -57,7 +57,6 @@ public class Main {
 
             CompositeFuture.join(futFileTree, futInterval).onComplete(ar -> {
                if (ar.succeeded()){
-
                    chrono.stop();
 
                    TreeSet<Pair<File,Long>> fileTree = (TreeSet<Pair<File, Long>>) ar.result().list().get(0);
@@ -66,6 +65,8 @@ public class Main {
                    System.out.println(mapInterval);
 
                    System.out.println("Tempo impiegato: " + chrono.getTime());
+               } else if (ar.failed()) {
+                   System.out.println("Errore durante l'esecuzione");
                }
             });
 

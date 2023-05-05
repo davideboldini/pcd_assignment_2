@@ -1,6 +1,7 @@
 package assignment.Agent;
 
 import assignment.Message.MessageFileLength;
+import assignment.Message.Type.MessageType;
 import assignment.Message.MessageUpdate;
 import assignment.Message.MessageInitInterval;
 import assignment.Utility.Pair;
@@ -33,11 +34,11 @@ public class IntervalAgent extends AbstractVerticle {
             for (Long numRows: mex.getFileLength()) {
                 this.addMap(numRows);
             }
-            eventBus.publish("gui-update-topic",  new MessageUpdate(new HashMap<>(intervalMap), "Interval mex"));
+            eventBus.publish("gui-update-topic",  new MessageUpdate(new HashMap<>(intervalMap), MessageType.INTERVAL));
         });
 
-        eventBus.consumer("get-interval-topic", res -> {
-            eventBus.publish("return-topic", new MessageUpdate(new HashMap<>(intervalMap), "Interval mex"));
+        eventBus.consumer("end-topic", res -> {
+            eventBus.publish("return-topic", new MessageUpdate(new HashMap<>(intervalMap), MessageType.INTERVAL));
         });
 
         startPromise.complete();

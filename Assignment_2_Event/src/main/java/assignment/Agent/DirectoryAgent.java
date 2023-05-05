@@ -6,16 +6,21 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
-
+import io.vertx.core.shareddata.Counter;
+import io.vertx.core.shareddata.SharedData;
 
 public class DirectoryAgent extends AbstractVerticle {
 
     @Override
     public void start(final Promise<Void> startPromise){
 
-        EventBus eventBus = this.getVertx().eventBus();
+        final SharedData sd = vertx.sharedData();
+        sd.getCounter("numDir", ar -> {
+            Counter counter = ar.result();
+            counter.getAndIncrement();
+        });
 
-        eventBus.publish("add-dir-topic", null);
+        EventBus eventBus = this.getVertx().eventBus();
 
         eventBus.consumer("directory-topic", (Message<MessageDirectory> message) -> {
             MessageDirectory mexDir = message.body();

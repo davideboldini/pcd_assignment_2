@@ -1,5 +1,6 @@
 package assignment.Agent.GUI;
 
+import assignment.Message.Type.MessageType;
 import assignment.Message.MessageUpdate;
 import assignment.Model.Directory;
 import assignment.Utility.Analyser.SourceAnalyzer;
@@ -36,7 +37,6 @@ public class GuiFormAgent extends AbstractVerticle {
 		frame.setBounds(100, 100, 922, 520);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
 
 		JLabel lblTitle = new JLabel("Progetto 2 - Event Loop");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -75,6 +75,7 @@ public class GuiFormAgent extends AbstractVerticle {
 				System.out.println("FileChooser closed");
 			}
 		});
+
 		btnSfogliaDirectory.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnSfogliaDirectory.setBounds(367, 68, 89, 23);
 		frame.getContentPane().add(btnSfogliaDirectory);
@@ -192,7 +193,7 @@ public class GuiFormAgent extends AbstractVerticle {
 
 		eventBus.consumer("gui-update-topic", (Message<MessageUpdate> message) -> {
 			MessageUpdate mex = message.body();
-			if (mex.getTypeMessage().equals("File length mex")) {
+			if (mex.getTypeMessage().equals(MessageType.FILE_LENGTH)) {
 				TreeSet<Pair<File, Long>> fileLengthTree = mex.getFileLengthMap();
 				this.setFileLengthGui(fileLengthTree);
 			} else {
@@ -201,7 +202,7 @@ public class GuiFormAgent extends AbstractVerticle {
 			}
 		});
 
-		eventBus.consumer("guiEnd-topic", res -> {
+		eventBus.consumer("end-topic", res -> {
 			this.setEndGui();
 		});
 	}

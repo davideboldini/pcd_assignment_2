@@ -1,9 +1,9 @@
 package assignment.Utility.Analyser;
 
-
 import assignment.Agent.*;
 import assignment.Agent.GUI.GuiFormAgent;
 import assignment.Message.*;
+import assignment.Message.Type.MessageType;
 import assignment.Model.Directory;
 import assignment.Utility.Codec.GenericCodec;
 import assignment.Utility.Pair;
@@ -29,19 +29,19 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
 
     private void initCodec(){
         vertx.eventBus().registerDefaultCodec(MessageDirectory.class,
-                new GenericCodec<MessageDirectory>(MessageDirectory.class));
+                new GenericCodec<>(MessageDirectory.class));
 
         vertx.eventBus().registerDefaultCodec(MessageFile.class,
-                new GenericCodec<MessageFile>(MessageFile.class));
+                new GenericCodec<>(MessageFile.class));
 
         vertx.eventBus().registerDefaultCodec(MessageFileLength.class,
-                new GenericCodec<MessageFileLength>(MessageFileLength.class));
+                new GenericCodec<>(MessageFileLength.class));
 
         vertx.eventBus().registerDefaultCodec(MessageInitInterval.class,
-                new GenericCodec<MessageInitInterval>(MessageInitInterval.class));
+                new GenericCodec<>(MessageInitInterval.class));
 
         vertx.eventBus().registerDefaultCodec(MessageUpdate.class,
-                new GenericCodec<MessageUpdate>(MessageUpdate.class));
+                new GenericCodec<>(MessageUpdate.class));
     }
 
     private void deployIntervalVerticle(final int MAXL, final int NI){
@@ -69,25 +69,18 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
         });
     }
 
-    private void deployControllerVerticle(){
-        vertx.deployVerticle(new ControllerAgent(), res -> {
-            System.out.println("Controller Verticle created");
-        });
-    }
-
     @Override
     public Pair<Promise<TreeSet<Pair<File, Long>>>, Promise<Map<Pair<Integer,Integer>, Integer>>> getReport(final Directory d, final int MAXL, final int NI){
 
         Promise<Map<Pair<Integer,Integer>, Integer>> intervalMapPromise = Promise.promise();
         Promise<TreeSet<Pair<File, Long>>> fileTreePromise = Promise.promise();
 
-        this.deployControllerVerticle();
         this.deployIntervalVerticle(MAXL, NI);
         this.deployDirectoryVerticles(d);
 
         this.getVertx().eventBus().consumer("return-topic", (Message<MessageUpdate> message) -> {
             MessageUpdate mex = message.body();
-            if (mex.getTypeMessage().equals("File length mex")) {
+            if (mex.getTypeMessage().equals(MessageType.FILE_LENGTH)) {
                 fileTreePromise.complete(mex.getFileLengthMap());
             } else {
                 intervalMapPromise.complete(mex.getIntervalMap());
@@ -100,7 +93,6 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
 
     @Override
     public void analyzeSources(final Directory d, final int MAXL, final int NI, final GuiFormAgent guiForm) {
-        this.deployControllerVerticle();
         this.deployGuiVerticle(guiForm);
         this.deployIntervalVerticle(MAXL, NI);
         this.deployDirectoryVerticles(d);

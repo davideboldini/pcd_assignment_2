@@ -2,12 +2,15 @@ package assignment.Agent;
 
 import assignment.Message.MessageFile;
 import assignment.Message.MessageFileLength;
+import assignment.Message.Type.MessageType;
 import assignment.Message.MessageUpdate;
 import assignment.Utility.Pair;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
+import io.vertx.core.shareddata.Counter;
+import io.vertx.core.shareddata.SharedData;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +30,8 @@ public class FileOperationAgent extends AbstractVerticle {
     public void start(final Promise<Void> startPromise) {
         System.out.println("File operation agent started");
 
+        final SharedData sd = this.getVertx().sharedData();
+
         EventBus eventBus = this.getVertx().eventBus();
 
         eventBus.consumer("file-topic", (Message<MessageFile> message) -> {
@@ -36,20 +41,27 @@ public class FileOperationAgent extends AbstractVerticle {
 
             for (File file: mex.getListFile()) {
                 Long numRows = this.countNumRows(file);
-                fileLengthTree.add(new Pair<>(file, numRows));
+                this.fileLengthTree.add(new Pair<>(file, numRows));
                 fileLengthList.add(numRows);
             }
 
-            eventBus.publish("remove-dir-topic", null);
             eventBus.publish("interval-topic", new MessageFileLength(fileLengthList));
-            eventBus.publish("gui-update-topic",  new MessageUpdate(new TreeSet<>(fileLengthTree), "File length mex"));
+            eventBus.publish("gui-update-topic",  new MessageUpdate(new TreeSet<>(fileLengthTree), MessageType.FILE_LENGTH));
 
+            sd.getCounter("numDir", ar -> {
+                Counter counter = ar.result();
+                counter.decrementAndGet(val -> {
+                    if (val.result() == 0){
+                        System.out.println("End");
+                        eventBus.publish("end-topic", null);
+                    }
+                });
+            });
         });
 
-        eventBus.consumer("get-fileTree-topic", res -> {
-            eventBus.publish("return-topic", new MessageUpdate(new TreeSet<>(fileLengthTree), "File length mex"));
+        eventBus.consumer("end-topic", res -> {
+            eventBus.publish("return-topic", new MessageUpdate(new TreeSet<>(fileLengthTree), MessageType.FILE_LENGTH));
         });
-
         startPromise.complete();
     }
 
