@@ -6,6 +6,7 @@ import Utility.Analyser.SourceAnalyser;
 import Utility.Analyser.SourceAnalyserImpl;
 import Utility.Chrono;
 import Utility.Pair;
+import Utility.Printer;
 
 import java.io.File;
 import java.util.List;
@@ -17,6 +18,8 @@ public class  Main {
     public static void main(String[] args) {
 
         int poolSize = Runtime.getRuntime().availableProcessors() + 1;
+        Printer printer = new Printer();
+
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Seleziona modalità: \n 1) Riga di comando \n 2) GUI \n");
@@ -25,10 +28,10 @@ public class  Main {
         if (choose == 1) {
             System.out.println("Selezionato: Riga di comando");
 
-            //System.out.println("Inserisci percorso: ");
-            final String D = "C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_1/TestFolder2"; //args[0] - Percorso iniziale
-            //String D = scan.nextLine();
-            //D = D.replace("\\", "/");
+            System.out.println("Inserisci percorso: ");
+            //final String D = "C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_1/TestFolder2"; //args[0] - Percorso iniziale
+            String D = scan.nextLine();
+            D = D.replace("\\", "/");
 
             System.out.println("Elementi da visualizzare della mappa: ");
             //final int N = 5; //N elementi da visualizzare della mappa
@@ -52,8 +55,10 @@ public class  Main {
             Pair<Map<Pair<Integer, Integer>, Integer>, List<Pair<File,Long>>> resultReport = sourceAnalyser.getReport(new Directory(D));
 
             chrono.stop();
-            System.out.println(resultReport.getY());
-            System.out.println(resultReport.getX());
+
+            printer.printFileLength(resultReport.getY(), N);
+            printer.printInterval(resultReport.getX());
+
             System.out.println("Tempo impiegato: " + chrono.getTime());
         }else if(choose == 2){
             System.out.println("Selezionato: GUI");
