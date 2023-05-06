@@ -6,6 +6,7 @@ import assignment.Utility.Analyser.SourceAnalyzer;
 import assignment.Utility.Analyser.SourceAnalyzerImpl;
 import assignment.Utility.Chrono;
 import assignment.Utility.Pair;
+import assignment.Utility.Printer;
 import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
@@ -21,6 +22,7 @@ public class Main {
 
         SourceAnalyzer sourceAnalyzer = new SourceAnalyzerImpl();
         Chrono chrono = new Chrono();
+        Printer printer = new Printer();
 
         Scanner scan = new Scanner(System.in);
 
@@ -58,16 +60,18 @@ public class Main {
             CompositeFuture.join(futFileTree, futInterval).onComplete(ar -> {
                if (ar.succeeded()){
                    chrono.stop();
-
                    TreeSet<Pair<File,Long>> fileTree = (TreeSet<Pair<File, Long>>) ar.result().list().get(0);
                    Map<Pair<Integer,Integer>, Integer> mapInterval = (Map<Pair<Integer, Integer>, Integer>) ar.result().list().get(1);
-                   System.out.println(fileTree.stream().toList().subList(0, N));
-                   System.out.println(mapInterval);
+
+                   printer.printFileLength(fileTree, N);
+                   printer.printInterval(mapInterval);
 
                    System.out.println("Tempo impiegato: " + chrono.getTime());
+
                } else if (ar.failed()) {
                    System.out.println("Errore durante l'esecuzione");
                }
+               System.exit(0);
             });
 
         }else if(choose == 2){

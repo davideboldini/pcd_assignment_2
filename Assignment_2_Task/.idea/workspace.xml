@@ -5,19 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad0be0df-119d-4555-978c-cd3ea05d5424" name="Changes" comment="removed useless class">
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Message/Type/MessageType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/ControllerAgent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/DirectoryAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/DirectoryAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/FileOperationAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/FileOperationAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/GUI/GuiFormAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/GUI/GuiFormAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/IntervalAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Agent/IntervalAgent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Message/MessageUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Message/MessageUpdate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Utility/Analyser/SourceAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Utility/Analyser/SourceAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/src/main/java/assignment/Utility/Sort.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,17 +35,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_2/Assignment_2_Task",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "editor.preferences.appearance"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_2/Assignment_2_Task&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.appearance&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\Altri computer\Il mio laptop\Programmazione_concorrente_Ricci\Progetti\pcd_assignment_2\Assignment_2_Task\src\Utility" />
