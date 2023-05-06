@@ -16,7 +16,7 @@ dependencies {
     implementation("io.vertx:vertx-core:4.4.1")
     implementation("io.vertx:vertx-web:4.4.1")
     implementation("io.vertx:vertx-web-client:4.4.1")
-    implementation("io.vertx:vertx-hazelcast:3.5.2")
+    implementation("io.vertx:vertx-hazelcast:4.4.1")
     implementation("com.google.guava:guava:31.1-jre")
 }
 

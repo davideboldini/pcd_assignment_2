@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="little improvements">
-      <change afterPath="$PROJECT_DIR$/src/main/java/assignment/Utility/Printer.java" afterDir="false" />
+    <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="added printer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +159,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683276519865</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added printer">
+      <created>1683368049336</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683368049336</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,6 +188,7 @@
     <MESSAGE value="completed event block" />
     <MESSAGE value="chrono implementation" />
     <MESSAGE value="little improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="little improvements" />
+    <MESSAGE value="added printer" />
+    <option name="LAST_COMMIT_MESSAGE" value="added printer" />
   </component>
 </project>
