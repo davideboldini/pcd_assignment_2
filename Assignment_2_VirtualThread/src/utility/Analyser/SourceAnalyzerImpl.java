@@ -22,7 +22,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
     private IntervalMonitor intervalMonitor;
     private ControllerThread controller;
     private GuiController guiController;
-    Thread guiControllerTh;
+    private Thread guiControllerTh;
 
     public SourceAnalyzerImpl(final GuiObserver guiObserver){
         this.guiController = new GuiController();
@@ -32,8 +32,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
     public SourceAnalyzerImpl(){}
 
     @Override
-    public void initSource(final int MAXL, final int NI, final int N){
-        this.N = N;
+    public void initSource(final int MAXL, final int NI){
         this.fileMonitor = new FileMonitor();
         this.intervalMonitor = new IntervalMonitor(MAXL, NI);
         this.controller = new ControllerThread();
@@ -52,7 +51,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
         controllerTh.start();
         controllerTh.join();
 
-        List<Pair<File, Long>> maxFile = fileMonitor.getFileLengthMap().stream().toList().subList(0,N);
+        List<Pair<File, Long>> maxFile = fileMonitor.getFileLengthMap().stream().toList();
         Map<Pair<Integer, Integer>, Integer> intervalMap = intervalMonitor.getIntervalMap();
 
         return new Pair<>(intervalMap, maxFile);

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface SourceAnalyzer {
-    void initSource(int MAXL, int NI, int N);
+    void initSource(int MAXL, int NI);
 
     Pair<Map<Pair<Integer, Integer>, Integer>, List<Pair<File,Long>>> getReport(Directory d) throws InterruptedException;
 

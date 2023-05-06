@@ -9,6 +9,7 @@ import utility.Analyser.SourceAnalyzer;
 import utility.Analyser.SourceAnalyzerImpl;
 import utility.Chrono;
 import utility.Pair;
+import utility.Printer;
 
 import java.io.File;
 import java.util.*;
@@ -17,6 +18,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         SourceAnalyzer sourceAnalyzer = new SourceAnalyzerImpl();
+        Printer printer = new Printer();
 
         Scanner scan = new Scanner(System.in);
 
@@ -26,10 +28,10 @@ public class Main {
         if (choose == 1) {
             System.out.println("Selezionato: Riga di comando");
 
-            //System.out.println("Inserisci percorso: ");
-            final String D = "C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_1/TestFolder2"; //args[0] - Percorso iniziale
-            //String D = scan.nextLine();
-            //D = D.replace("\\", "/");
+            System.out.println("Inserisci percorso: ");
+            //final String D = "C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_1/TestFolder2"; //args[0] - Percorso iniziale
+            String D = scan.nextLine();
+            D = D.replace("\\", "/");
 
             System.out.println("Elementi da visualizzare della mappa: ");
             //final int N = 5; //N elementi da visualizzare della mappa
@@ -48,7 +50,7 @@ public class Main {
 
             final Chrono chrono = new Chrono();
 
-            sourceAnalyzer.initSource(MAXL, NI, N);
+            sourceAnalyzer.initSource(MAXL, NI);
 
             chrono.start();
 
@@ -56,8 +58,9 @@ public class Main {
 
             chrono.stop();
 
-            System.out.println(report.getY());
-            System.out.println(report.getX());
+            printer.printFileLength(report.getY(), N);
+            printer.printInterval(report.getX());
+
             System.out.println("Tempo impiegato: " + chrono.getTime());
             System.out.println("Termine programma");
         } else if(choose == 2){

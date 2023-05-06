@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0be0df-119d-4555-978c-cd3ea05d5424" name="Changes" comment="removed useless class">
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/.idea/git_toolbox_prj.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Utility/Printer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Event/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Event/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utility/Sort.java" beforeDir="false" />
-    </list>
+    <list default="true" id="ad0be0df-119d-4555-978c-cd3ea05d5424" name="Changes" comment="added printer" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,13 +83,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682274374533</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added printer">
+      <created>1683379724382</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1683379724382</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="completed first part task assignment" />
     <MESSAGE value="completed second part task assignment" />
     <MESSAGE value="removed useless class" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed useless class" />
+    <MESSAGE value="added printer" />
+    <option name="LAST_COMMIT_MESSAGE" value="added printer" />
   </component>
 </project>
