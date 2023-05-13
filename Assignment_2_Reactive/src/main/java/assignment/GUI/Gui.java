@@ -1,21 +1,17 @@
-package GUI;
+package assignment.GUI;
 
-//import Controller.GuiController;
-import Model.Directory;
-import Monitor.GuiObserver;
-import utility.Analyser.SourceAnalyzer;
-import utility.Analyser.SourceAnalyzerImpl;
-import utility.Pair;
+import assignment.Model.Directory;
+import assignment.Utility.Analyser.SourceAnalyzer;
+import assignment.Utility.Pair;
+
 
 import javax.swing.*;
-import java.awt.Font;
-import java.awt.Color;
+import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.TreeSet;
 
-public class GuiForm implements GuiObserver {
+public class Gui {
 
 	private final JFrame frame;
 	private final JTextArea textAreaInterval;
@@ -23,21 +19,21 @@ public class GuiForm implements GuiObserver {
 	private final JButton btnStop;
 	private final JButton btnSearch;
 	private int N;
-	private final SourceAnalyzer sourceAnalyzer;
+	private final SourceAnalyzer sourceAnalyser;
 
 	/**
 	 * Create the application.
 	 */
-	public GuiForm() {
+	public Gui(final SourceAnalyzer sourceAnalyzer) {
 
-		sourceAnalyzer = new SourceAnalyzerImpl(this);
+		this.sourceAnalyser = sourceAnalyzer;
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 922, 520);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblTitle = new JLabel("Progetto 2 - Virtual Thread");
+		JLabel lblTitle = new JLabel("Progetto 2 - Event Loop");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTitle.setBounds(10, 0, 913, 35);
@@ -57,7 +53,7 @@ public class GuiForm implements GuiObserver {
 		textFieldDirectory.setBackground(Color.WHITE);
 		textFieldDirectory.setEditable(false);
 		textFieldDirectory.setBounds(88, 69, 257, 20);
-		textFieldDirectory.setText("C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_1/TestFolder2");
+		textFieldDirectory.setText("C:/Users/david/Desktop/TestFolder2");
 		frame.getContentPane().add(textFieldDirectory);
 		textFieldDirectory.setColumns(10);
 
@@ -74,6 +70,7 @@ public class GuiForm implements GuiObserver {
 				System.out.println("FileChooser closed");
 			}
 		});
+
 		btnSfogliaDirectory.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnSfogliaDirectory.setBounds(367, 68, 89, 23);
 		frame.getContentPane().add(btnSfogliaDirectory);
@@ -129,6 +126,7 @@ public class GuiForm implements GuiObserver {
 			int textMaxLength = Integer.parseInt(textFieldMaxLength.getText());
 			int numInterval = (Integer)spinnerNumInterval.getValue();
 			N = (Integer)spinnerNumRowsFile.getValue();
+			Directory d = new Directory(textFieldDirectory.getText());
 
 			if (textMaxLength < numInterval && textMaxLength % numInterval != 0)
 				JOptionPane.showMessageDialog(frame, "Numero di intervalli e/o lunghezza massima errati","Errore", JOptionPane.ERROR_MESSAGE);
@@ -139,12 +137,6 @@ public class GuiForm implements GuiObserver {
 				textAreaInterval.setText("");
 				textAreaInterval.setEditable(true);
 
-				sourceAnalyzer.initSource(textMaxLength, numInterval);
-				try {
-					sourceAnalyzer.analyzeSources(new Directory(textFieldDirectory.getText()));
-				} catch (InterruptedException ex) {
-					throw new RuntimeException(ex);
-				}
 
 				btnSearch.setEnabled(false);
 				btnStop.setEnabled(true);
@@ -158,7 +150,7 @@ public class GuiForm implements GuiObserver {
 			btnStop.setEnabled(false);
 			btnSearch.setEnabled(true);
 
-			sourceAnalyzer.stopAnalyze();
+
 
 			textAreaFileLength.setEditable(false);
 			textAreaInterval.setEditable(false);
@@ -182,56 +174,9 @@ public class GuiForm implements GuiObserver {
 		frame.getContentPane().add(scrollPane_1);
 	}
 
+
 	public void setVisible(final boolean visible){
 		frame.setVisible(visible);
 	}
 
-
-
-	@Override
-	public void guiFileLengthUpdated(TreeSet<Pair<File, Long>> fileLengthMap) {
-		try {
-			SwingUtilities.invokeLater(() -> {
-				if (fileLengthMap.size() > N){
-					textAreaFileLength.setText("");
-					List<Pair<File, Long>> fileList = fileLengthMap.stream().toList().subList(0,N);
-					fileList.forEach(pair -> textAreaFileLength.setText(textAreaFileLength.getText() + "\n" + "File: " + pair.getX().getName() + " - Len: " + pair.getY() + "\n"));
-				}
-			});
-		} catch (Exception ex){
-			ex.printStackTrace();
-		}
-	}
-
-
-	@Override
-	public void guiIntervalUpdated(HashMap<Pair<Integer, Integer>, Integer> intervalMap) {
-		try {
-			SwingUtilities.invokeLater(() -> {
-				textAreaInterval.setText("");
-				intervalMap.forEach((key, value) -> {
-					if (key.getY().equals(-1)) {
-						textAreaInterval.setText(textAreaInterval.getText() + "Intervallo [ " + key.getX() + " - inf ]: " + value + "\n");
-					} else {
-						textAreaInterval.setText(textAreaInterval.getText() + "Intervallo [ " + key.getX() + " - " + key.getY() + " ]: " + value + "\n");
-					}
-				});
-			});
-		} catch (Exception ex){
-			ex.printStackTrace();
-		}
-	}
-
-	@Override
-	public void analyzeEnded() {
-		try {
-			SwingUtilities.invokeLater(() -> {
-				JOptionPane.showMessageDialog(frame, "Elaborazione terminata","Completato", JOptionPane.PLAIN_MESSAGE);
-				btnStop.setEnabled(false);
-				btnSearch.setEnabled(true);
-			});
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-	}
 }
