@@ -52,8 +52,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
     }
 
     private void deployGuiVerticle(final GuiFormAgent guiForm){
-        DeploymentOptions options = new DeploymentOptions().setWorker(true);
-        vertx.deployVerticle(guiForm, options);
+        vertx.deployVerticle(guiForm);
     }
 
     private void deployDirectoryVerticles(final Directory d){

@@ -1,4 +1,4 @@
-package assignment.Utility;/*
+package org.example;/*
  * A standard generic utility.Pair<X,Y>, with getters, hashCode, equals, and toString well implemented.
  */
 
@@ -46,9 +46,12 @@ public class Pair<X,Y> {
 		} else if (!x.equals(other.x))
 			return false;
 		if (y == null) {
-            return other.y == null;
-		} else return y.equals(other.y);
-    }
+			if (other.y != null)
+				return false;
+		} else if (!y.equals(other.y))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {

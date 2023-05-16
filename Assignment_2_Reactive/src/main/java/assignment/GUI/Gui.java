@@ -3,13 +3,22 @@ package assignment.GUI;
 import assignment.Model.Directory;
 import assignment.Utility.Analyser.SourceAnalyzer;
 import assignment.Utility.Pair;
+import assignment.Utility.Printer;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
 
 public class Gui {
 
@@ -19,21 +28,25 @@ public class Gui {
 	private final JButton btnStop;
 	private final JButton btnSearch;
 	private int N;
-	private final SourceAnalyzer sourceAnalyser;
+	private final SourceAnalyzer sourceAnalyzer;
+	private final Printer printer;
+	private PublishSubject<Pair<TreeSet<Pair<File, Long>>, Map<Pair<Integer,Integer>, Integer>>> updateStream;
 
 	/**
 	 * Create the application.
 	 */
 	public Gui(final SourceAnalyzer sourceAnalyzer) {
 
-		this.sourceAnalyser = sourceAnalyzer;
+		this.updateStream = PublishSubject.create();
+		this.sourceAnalyzer = sourceAnalyzer;
+		this.printer = new Printer();
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 922, 520);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblTitle = new JLabel("Progetto 2 - Event Loop");
+		JLabel lblTitle = new JLabel("Progetto 2 - RxJava");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTitle.setBounds(10, 0, 913, 35);
@@ -137,6 +150,9 @@ public class Gui {
 				textAreaInterval.setText("");
 				textAreaInterval.setEditable(true);
 
+				updateStream = PublishSubject.create();
+				this.subscribeStream();
+				sourceAnalyzer.analyzeSources(d, textMaxLength, numInterval, updateStream);
 
 				btnSearch.setEnabled(false);
 				btnStop.setEnabled(true);
@@ -150,7 +166,8 @@ public class Gui {
 			btnStop.setEnabled(false);
 			btnSearch.setEnabled(true);
 
-
+			updateStream.onComplete();
+			//this.setEndGui();
 
 			textAreaFileLength.setEditable(false);
 			textAreaInterval.setEditable(false);
@@ -172,11 +189,77 @@ public class Gui {
 		JScrollPane scrollPane_1 = new JScrollPane(textAreaFileLength);
 		scrollPane_1.setBounds(25, 279, 431, 171);
 		frame.getContentPane().add(scrollPane_1);
+		this.setVisible(true);
+
 	}
 
 
 	public void setVisible(final boolean visible){
 		frame.setVisible(visible);
+	}
+
+	private void subscribeStream(){
+		updateStream
+				.subscribeOn(Schedulers.newThread())
+				.sample(50, TimeUnit.MILLISECONDS)
+				.subscribeWith(new Observer<Pair<TreeSet<Pair<File, Long>>, Map<Pair<Integer, Integer>, Integer>>>() {
+					@Override
+					public void onSubscribe(@NonNull Disposable d) {}
+
+					@Override
+					public void onNext(@NonNull Pair<TreeSet<Pair<File, Long>>, Map<Pair<Integer, Integer>, Integer>> treeSetMapPair) {
+						updateGui(treeSetMapPair);
+					}
+
+					@Override
+					public void onError(@NonNull Throwable e) {
+						e.printStackTrace();
+					}
+
+					@Override
+					public void onComplete() {
+						setEndGui();
+					}
+				});
+	}
+
+	public void updateGui(final Pair<TreeSet<Pair<File, Long>>, Map<Pair<Integer, Integer>, Integer>> data){
+		this.updateFileLength(data.getX());
+		this.updateInterval(data.getY());
+	}
+
+	private void updateFileLength(final TreeSet<Pair<File, Long>> treeSet){
+		try {
+			SwingUtilities.invokeAndWait(() -> {
+				if (treeSet.size() > N){
+					textAreaFileLength.setText(printer.printFileLengthGui(treeSet, N));
+				}
+			});
+		} catch (Exception ignored) {
+		}
+	}
+
+	private void updateInterval(final Map<Pair<Integer,Integer>, Integer> intervalMap){
+
+		try {
+			SwingUtilities.invokeAndWait(() -> {
+				textAreaInterval.setText(printer.printIntervalGui(intervalMap));
+			});
+		} catch (Exception ignored) {
+		}
+	}
+
+	private @NonNull Action setEndGui(){
+		try {
+			SwingUtilities.invokeLater(() -> {
+				JOptionPane.showMessageDialog(frame, "Elaborazione terminata","Completato", JOptionPane.PLAIN_MESSAGE);
+				btnStop.setEnabled(false);
+				btnSearch.setEnabled(true);
+			});
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

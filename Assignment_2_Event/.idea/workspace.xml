@@ -5,33 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5223b2e-56cf-4568-a355-f09ba7c116ac" name="Changes" comment="little improvements">
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/DataStructureFlow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/DirectoryFlow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/FileFlow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/FileLengthFlow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/IntervalFlow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/MasterFlow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Directory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/DirectoryEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/Event.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/EventEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/FilesEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/RowsEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Analyser/SourceAnalyzer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Chrono.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Pair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Printer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/SingleFlow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/src/main/java/org/example/Chrono.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/src/main/java/org/example/DataStructureFlow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/src/main/java/org/example/Directory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/src/main/java/org/example/IterateFlow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/src/main/java/org/example/Pair.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Reactive_Test/src/main/java/org/example/Printer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_05_2023_19_17_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_05_2023_19_17__Changes_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/DataStructureFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/DataStructureFlow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/DirectoryFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/DirectoryFlow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/FileFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/FileFlow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/FileLengthFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/FileLengthStructure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/IntervalFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/IntervalDataStructure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Flows/MasterFlow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/GUI/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/GUI/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Task/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_VirtualThread/src/GUI/GuiForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_VirtualThread/src/GUI/GuiForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment_2_VirtualThread/src/Threads/ControllerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_VirtualThread/src/Threads/ControllerThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/DirectoryEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/Event.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/EventEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/FilesEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Model/Events/RowsEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Analyser/SourceAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Analyser/SourceAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Analyser/SourceAnalyzerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Pair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Printer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment_2_Reactive/src/main/java/assignment/Utility/Printer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +72,12 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Assignment_2_Event" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Assignment_2_Event" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -111,6 +129,9 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_2/Assignment_2_Task&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
@@ -118,6 +139,49 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="assignment.GUI" />
     </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="assignment.Main" />
+      <module name="Assignment_2_Event.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Assignment_2_Event [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Assignment_2_Event [clean]" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

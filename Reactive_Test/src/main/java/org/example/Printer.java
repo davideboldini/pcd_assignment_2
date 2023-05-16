@@ -1,7 +1,6 @@
-package assignment.Utility;
+package org.example;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -24,24 +23,13 @@ public class Printer {
     }
 
     public String printFileLengthGui(final TreeSet<Pair<File,Long>> fileTree, final int N){
-        StringBuilder out = new StringBuilder();
-
-        for (Pair<File,Long> entry : fileTree.stream().toList().subList(0,N)) {
-            out.append("File: ").append(entry.getX().getAbsolutePath()).append(" -> ").append(entry.getY()).append(" righe \n");
+        String out = "";
+        out += ("----------------------- FILE -----------------------");
+        for (Pair<File,Long> entry: fileTree.stream().toList().subList(0, N)) {
+            out += ("File: " + entry.getX().getAbsolutePath() + " -> " + entry.getY() + " righe");
         }
-
-        out.append("\n");
-        return out.toString();
-    }
-
-    public String printIntervalGui(final Map<Pair<Integer,Integer>, Integer> intervalMap){
-        StringBuilder out = new StringBuilder();
-
-        for (Map.Entry<Pair<Integer,Integer>, Integer> entry: intervalMap.entrySet()) {
-            out.append("Intervallo " + entry.getKey().getX() + "-" + entry.getKey().getY() + " : " + entry.getValue() + "\n");
-        }
-        out.append("\n");
-        return out.toString();
+        out += ("\n");
+        return out;
     }
 
 }

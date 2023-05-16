@@ -1,14 +1,9 @@
-package assignment.Flows;
+package org.example;
 
-import assignment.Utility.Pair;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -31,9 +26,19 @@ public class DataStructureFlow {
         return intervalMap;
     }
 
-    public void fillStructureFlow(final File file){
+    public void fillStructureFlow(final Pair<File, Long> filePair){
 
-
+        Flowable.fromCallable(() -> {
+            //System.out.println("Start");
+            fileLengthTree.add(filePair);
+            //System.out.println("Complete");
+            return "Done";
+        }).subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.single())
+                .subscribe(s -> {
+                    System.out.println(Thread.currentThread());
+                    System.out.println(fileLengthTree.size());
+                });
     }
 
     private void initTreeSet(){
@@ -71,14 +76,6 @@ public class DataStructureFlow {
 
     private void addMap(final Long numRows){
         this.intervalMap.keySet().stream().filter(interval -> numRows < interval.getY() || (numRows >= interval.getX() && interval.getY().equals(-1))).findFirst().ifPresent(interval -> intervalMap.put(interval, intervalMap.get(interval) + 1));
-    }
-
-    private Long countNumRows(final File file) {
-        try {
-            return Files.lines(Path.of(file.getPath())).count();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

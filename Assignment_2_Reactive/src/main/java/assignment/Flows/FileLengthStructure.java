@@ -7,11 +7,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.io.File;
 import java.util.TreeSet;
 
-public class FileLengthFlow {
+public class FileLengthStructure {
 
     private TreeSet<Pair<File, Long>> fileLengthTree;
 
-    public FileLengthFlow(){
+    public FileLengthStructure(){
         this.initTreeSet();
     }
 
@@ -19,17 +19,8 @@ public class FileLengthFlow {
         return fileLengthTree;
     }
 
-    public void observeFileLength(final Pair<File,Long> filePair){
-        Observable.just(filePair)
-                .subscribeOn(Schedulers.computation())
-                .map(pair -> {
-                    fileLengthTree.add(pair);
-                    return fileLengthTree;
-                })
-                .subscribe(res -> {
-                    //System.out.println(Thread.currentThread());
-                    System.out.println(fileLengthTree.size());
-                });
+    public void addElement(final Pair<File, Long> elem){
+        this.fileLengthTree.add(elem);
     }
 
     private void initTreeSet(){

@@ -7,11 +7,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class IntervalFlow {
+public class IntervalDataStructure {
 
     private Map<Pair<Integer,Integer>, Integer> intervalMap;
 
-    public IntervalFlow(final int MAXL, final int NI){
+    public IntervalDataStructure(final int MAXL, final int NI){
         this.initMap(MAXL,NI);
     }
 
@@ -19,19 +19,8 @@ public class IntervalFlow {
         return intervalMap;
     }
 
-    public void observeInterval(final Long numRows){
-        Observable.create(emitter -> {
-           emitter.onNext(numRows);
-                })
-                .subscribeOn(Schedulers.computation())
-                .map(rows -> {
-                    this.addMap((Long) rows);
-                    return intervalMap;
-                })
-                .subscribe(intervalMap -> {
-                    //System.out.println(Thread.currentThread());
-                    //System.out.println(intervalMap);
-                });
+    public void addElement(final Long numRows){
+        this.addMap(numRows);
     }
 
     private void initMap(final int MAXL, final int NI){

@@ -13,6 +13,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation ("io.reactivex.rxjava3:rxjava:3.1.6")
+    implementation("com.google.guava:guava:31.1-jre")
 }
 
 tasks.test {
