@@ -55,20 +55,9 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
         Observable<File> files = new DirectoryFlow().observeAllFiles(d);
         Observable<Pair<File, Long>> pairObservable = files.observeOn(Schedulers.computation()).flatMap(f -> new FileFlow().observeFile(f));
 
-        /*
-        pairObservable.subscribe((pair -> {
-            fileLengthStructure.addElement(pair);
-            intervalStructure.addElement(pair.getY());
-            guiPublishSubject.onNext(new Pair<>(new TreeSet<>(fileLengthStructure.getFileLengthTree()), new HashMap<>(intervalStructure.getIntervalMap())));
-        }), Throwable::printStackTrace);
-
-         */
-
         pairObservable.subscribeWith(new Observer<Pair<File, Long>>() {
             @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
+            public void onSubscribe(@NonNull Disposable d) {}
 
             @Override
             public void onNext(@NonNull Pair<File, Long> fileLongPair) {
@@ -78,9 +67,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
             }
 
             @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
+            public void onError(@NonNull Throwable e) {}
 
             @Override
             public void onComplete() {
