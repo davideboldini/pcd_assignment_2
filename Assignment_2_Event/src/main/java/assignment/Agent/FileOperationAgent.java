@@ -6,6 +6,8 @@ import assignment.Message.Type.MessageType;
 import assignment.Message.MessageUpdate;
 import assignment.Utility.Pair;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
@@ -21,9 +23,11 @@ import java.util.*;
 public class FileOperationAgent extends AbstractVerticle {
 
     private TreeSet<Pair<File, Long>> fileLengthTree;
+    private HashMap<Pair<Integer,Integer>, Integer> intervalMap;
 
-    public FileOperationAgent(){
+    public FileOperationAgent(final int MAXL, final int NI){
         this.initTreeSet();
+        this.initMap(MAXL, NI);
     }
 
     @Override
@@ -37,30 +41,37 @@ public class FileOperationAgent extends AbstractVerticle {
         eventBus.consumer("file-topic", (Message<MessageFile> message) -> {
             MessageFile mex = message.body();
 
-            List<Long> fileLengthList = new ArrayList<>();
+            Promise<List<File>> listFilePromise = mex.getListFilePromise();
+            Future<List<File>> listFileFuture = listFilePromise.future();
 
-            for (File file: mex.getListFile()) {
-                Long numRows = this.countNumRows(file);
-                this.fileLengthTree.add(new Pair<>(file, numRows));
-                fileLengthList.add(numRows);
-            }
+            listFileFuture.onComplete((AsyncResult<List<File>> res) -> {
+               List<File> listFile = res.result();
 
-            eventBus.publish("interval-topic", new MessageFileLength(fileLengthList));
-            eventBus.publish("gui-update-topic",  new MessageUpdate(new TreeSet<>(fileLengthTree), MessageType.FILE_LENGTH));
+                for (File file: listFile) {
+                    Long numRows = this.countNumRows(file);
+                    this.fileLengthTree.add(new Pair<>(file, numRows));
+                    this.addMap(numRows);
+                }
 
-            sd.getCounter("numDir", ar -> {
-                Counter counter = ar.result();
-                counter.decrementAndGet(val -> {
-                    if (val.result() == 0){
-                        System.out.println("End");
-                        eventBus.publish("end-topic", null);
-                    }
+                eventBus.publish("gui-update-topic",  new MessageUpdate(fileLengthTree, MessageType.FILE_LENGTH));
+                eventBus.publish("gui-update-topic",  new MessageUpdate(intervalMap, MessageType.INTERVAL));
+
+                sd.getCounter("numDir", ar -> {
+                    Counter counter = ar.result();
+                    counter.decrementAndGet(val -> {
+                        System.out.println(val);
+                        if (val.result() == 0){
+                            System.out.println("End");
+                            eventBus.publish("end-topic", null);
+                        }
+                    });
                 });
             });
         });
 
         eventBus.consumer("end-topic", res -> {
-            eventBus.publish("return-topic", new MessageUpdate(new TreeSet<>(fileLengthTree), MessageType.FILE_LENGTH));
+            eventBus.publish("return-topic", new MessageUpdate(fileLengthTree, MessageType.FILE_LENGTH));
+            eventBus.publish("return-topic", new MessageUpdate(intervalMap, MessageType.INTERVAL));
         });
         startPromise.complete();
     }
@@ -81,6 +92,33 @@ public class FileOperationAgent extends AbstractVerticle {
             }
             return countCompare;
         });
+    }
+
+    private void initMap(final int MAXL, final int NI){
+        this.intervalMap = new LinkedHashMap<>();
+
+        int intervalSize = MAXL;
+
+        if (NI > 1) {
+            intervalSize = MAXL / (NI - 1);
+        } else {
+            this.intervalMap.put(new Pair<>(0, MAXL), 0);
+            return;
+        }
+
+        for (int i = 0; i < (NI - 1); i++){
+            if ( ((i + 1) * intervalSize)-1 != (MAXL - 1) && i == (NI - 1)-1){
+                this.intervalMap.put(new Pair<>(i * intervalSize, (MAXL - 1)), 0);
+            }else {
+                this.intervalMap.put(new Pair<>(i * intervalSize, ((i + 1) * intervalSize)-1), 0);
+            }
+        }
+
+        this.intervalMap.put(new Pair<>(MAXL, -1), 0);
+    }
+
+    private void addMap(final Long numRows){
+        this.intervalMap.keySet().stream().filter(interval -> numRows < interval.getY() || (numRows >= interval.getX() && interval.getY().equals(-1))).findFirst().ifPresent(interval -> intervalMap.put(interval, intervalMap.get(interval) + 1));
     }
 
     @Override

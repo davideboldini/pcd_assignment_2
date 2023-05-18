@@ -149,7 +149,7 @@ public class Gui {
 			btnStop.setEnabled(false);
 			btnSearch.setEnabled(true);
 
-			updateStream.onComplete();
+			sourceAnalyzer.stopFlows();
 
 			textAreaFileLength.setEditable(false);
 			textAreaInterval.setEditable(false);

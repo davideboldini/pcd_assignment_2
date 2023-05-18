@@ -1,27 +1,20 @@
 package assignment.Message;
 
+import io.vertx.core.Promise;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageFile {
 
-    private File file;
-    private List<File> listFile;
+    private Promise<List<File>> listFilePromise;
 
-    public MessageFile(final File file){
-        this.file = file;
+    public MessageFile(final Promise<List<File>> listFilePromise){
+        this.listFilePromise = listFilePromise;
     }
 
-    public MessageFile(final List<File> listFile){
-        this.listFile = new ArrayList<>(listFile);
-    }
-
-    public File getFile(){
-        return this.file;
-    }
-
-    public List<File> getListFile() {
-        return listFile;
+    public Promise<List<File>> getListFilePromise() {
+        return listFilePromise;
     }
 }

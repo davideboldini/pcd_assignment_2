@@ -12,6 +12,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class SourceAnalyzerImpl implements SourceAnalyzer {
 
     public DataStructureFlow dataStructureFlow;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     public CompletableFuture<Pair<TreeSet<Pair<File, Long>>, Map<Pair<Integer,Integer>, Integer>>> getReport(final Directory d, final int MAXL, final int NI){
         return CompletableFuture.supplyAsync(() -> {
@@ -55,6 +57,32 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
         Observable<File> files = new DirectoryFlow().observeAllFiles(d);
         Observable<Pair<File, Long>> pairObservable = files.observeOn(Schedulers.computation()).flatMap(f -> new FileFlow().observeFile(f));
 
+        disposables.add(pairObservable.subscribeWith(new DisposableObserver<Pair<File,Long>>(){
+
+            @Override
+            public void onNext(@NonNull Pair<File, Long> fileLongPair) {
+                fileLengthStructure.addElement(fileLongPair);
+                intervalStructure.addElement(fileLongPair.getY());
+                guiPublishSubject.onNext(new Pair<>(new TreeSet<>(fileLengthStructure.getFileLengthTree()), new HashMap<>(intervalStructure.getIntervalMap())));
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                try {
+                    Thread.sleep(80);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                guiPublishSubject.onComplete();
+            }
+        }));
+
+        /*
         pairObservable.subscribeWith(new Observer<Pair<File, Long>>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {}
@@ -80,6 +108,12 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
             }
         });
 
+         */
+
+    }
+
+    public void stopFlows(){
+        disposables.clear();
     }
 
 }

@@ -27,8 +27,8 @@ public class FileFlow {
     private Long countNumRows(final File file) {
         try {
             return Files.lines(Path.of(file.getPath())).count();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ignored) {
         }
+        return null;
     }
 }

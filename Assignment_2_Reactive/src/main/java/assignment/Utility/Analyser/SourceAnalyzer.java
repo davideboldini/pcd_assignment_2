@@ -17,4 +17,6 @@ public interface SourceAnalyzer {
     void analyzeSources(final Directory d, final int MAXL, final int NI,
                                    final PublishSubject<Pair<TreeSet<Pair<File, Long>>, Map<Pair<Integer,Integer>, Integer>>> guiPublishSubject);
 
+    void stopFlows();
+
 }

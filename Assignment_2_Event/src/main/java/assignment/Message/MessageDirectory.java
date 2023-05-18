@@ -1,16 +1,17 @@
 package assignment.Message;
 
 import assignment.Model.Directory;
+import io.vertx.core.Promise;
 
 public class MessageDirectory {
 
-    private final Directory directory;
+    private final Promise<Directory> directoryPromise;
 
-    public MessageDirectory(final Directory directory){
-        this.directory = directory;
+    public MessageDirectory(final Promise<Directory> directoryPromise){
+        this.directoryPromise = directoryPromise;
     }
 
-    public Directory getDirectory(){
-        return this.directory;
+    public Promise<Directory> getDirectoryPromise() {
+        return directoryPromise;
     }
 }
