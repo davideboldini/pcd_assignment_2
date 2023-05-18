@@ -33,7 +33,8 @@ public class FileMonitor {
         try {
             lock.lock();
             this.fileLengthMap.add(new Pair<>(file.getAbsoluteFile(), numRows));
-            notifyObservers();
+            if (!observers.isEmpty())
+                notifyObservers();
         } finally {
             lock.unlock();
         }

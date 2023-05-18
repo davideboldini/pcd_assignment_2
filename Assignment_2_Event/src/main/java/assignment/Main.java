@@ -32,10 +32,10 @@ public class Main {
         if (choose == 1){
             System.out.println("Selezionato: Riga di comando");
 
-            //System.out.println("Inserisci percorso: ");
-            final String D = "C:/Users/david/Desktop/TestFolder2"; //args[0] - Percorso iniziale
-            //String D = scan.nextLine();
-            //D = D.replace("\\", "/");
+            System.out.println("Inserisci percorso: ");
+            //final String D = "C:/Users/david/Desktop/TestFolder2"; //args[0] - Percorso iniziale
+            String D = scan.nextLine();
+            D = D.replace("\\", "/");
 
             System.out.println("Elementi da visualizzare della mappa: ");
             //final int N = 5; //N elementi da visualizzare della mappa

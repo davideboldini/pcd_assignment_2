@@ -29,14 +29,14 @@ public class ControllerThread implements Runnable{
     public void run() {
         while(!threadQueue.isEmpty()){
             try {
-                System.out.println("before");
                 this.threadQueue.poll().join();
-                System.out.println("after");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-        this.guiController.processStop();
+        if (guiController != null){
+            this.guiController.processStop();
+        }
     }
 
     public void stopThreads(){

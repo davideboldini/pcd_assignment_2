@@ -22,7 +22,6 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
     private IntervalMonitor intervalMonitor;
     private ControllerThread controller;
     private GuiController guiController;
-    private Thread guiControllerTh;
 
     public SourceAnalyzerImpl(final GuiObserver guiObserver){
         this.guiController = new GuiController();
@@ -37,8 +36,11 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
         this.intervalMonitor = new IntervalMonitor(MAXL, NI);
         this.controller = new ControllerThread();
 
-        fileMonitor.addObserver(guiController);
-        intervalMonitor.addObserver(guiController);
+        if (guiController != null) {
+
+            fileMonitor.addObserver(guiController);
+            intervalMonitor.addObserver(guiController);
+        }
     }
 
 
@@ -60,7 +62,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
 
     @Override
     public void analyzeSources(Directory d) throws InterruptedException {
-        ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
         Thread controllerTh = Thread.ofVirtual().unstarted(controller);
         Thread firstDir = Thread.ofVirtual().unstarted(new DirectoryThread(d, fileMonitor, intervalMonitor, controller));
 
@@ -69,11 +71,6 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
             controller.addThread(firstDir);
             controller.addGuiThread(guiController);
             controllerTh.start();
-            try {
-                controllerTh.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         });
     }
 

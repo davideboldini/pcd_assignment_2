@@ -51,7 +51,9 @@ public class IntervalMonitor {
         try {
             lock.lock();
             this.intervalMap.keySet().stream().filter(interval -> numRows < interval.getY() || (numRows >= interval.getX() && interval.getY().equals(-1))).findFirst().ifPresent(interval -> intervalMap.put(interval, intervalMap.get(interval) + 1));
-            notifyObservers();
+            //System.out.println(this.intervalMap.entrySet());
+            if (!observers.isEmpty())
+                notifyObservers();
         } finally {
             lock.unlock();
         }
