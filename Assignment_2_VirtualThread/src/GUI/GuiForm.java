@@ -23,41 +23,40 @@ public class GuiForm implements GuiObserver {
 	private final JButton btnStop;
 	private final JButton btnSearch;
 	private int N;
-	private final SourceAnalyzer sourceAnalyzer;
 
 	/**
 	 * Create the application.
 	 */
 	public GuiForm() {
 
-		sourceAnalyzer = new SourceAnalyzerImpl(this);
+		SourceAnalyzer sourceAnalyzer = new SourceAnalyzerImpl(this);
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 922, 520);
+		frame.setBounds(100, 100, 789, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblTitle = new JLabel("Progetto 2 - Virtual Thread");
+		JLabel lblTitle = new JLabel("Progetto 2 - RxJava");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTitle.setBounds(10, 0, 913, 35);
+		lblTitle.setBounds(10, 0, 774, 35);
 		frame.getContentPane().add(lblTitle);
 
 		JLabel lblDirectory = new JLabel("Directory:");
-		lblDirectory.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDirectory.setBounds(10, 60, 79, 35);
+		lblDirectory.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDirectory.setBounds(20, 74, 79, 35);
 		frame.getContentPane().add(lblDirectory);
 
 		JLabel lblNumInterval = new JLabel("Numero intervalli:");
-		lblNumInterval.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNumInterval.setBounds(287, 124, 128, 31);
+		lblNumInterval.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNumInterval.setBounds(205, 142, 128, 20);
 		frame.getContentPane().add(lblNumInterval);
 
 		JTextField textFieldDirectory = new JTextField();
 		textFieldDirectory.setBackground(Color.WHITE);
 		textFieldDirectory.setEditable(false);
-		textFieldDirectory.setBounds(88, 69, 257, 20);
-		textFieldDirectory.setText("C:/Users/david/Desktop/Programmazione_concorrente_Ricci/Progetti/pcd_assignment_1/TestFolder2");
+		textFieldDirectory.setBounds(98, 83, 257, 20);
+		textFieldDirectory.setText("C:/Users/david/Desktop/TestFolder2");
 		frame.getContentPane().add(textFieldDirectory);
 		textFieldDirectory.setColumns(10);
 
@@ -74,42 +73,30 @@ public class GuiForm implements GuiObserver {
 				System.out.println("FileChooser closed");
 			}
 		});
+
 		btnSfogliaDirectory.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnSfogliaDirectory.setBounds(367, 68, 89, 23);
+		btnSfogliaDirectory.setBounds(377, 82, 89, 23);
 		frame.getContentPane().add(btnSfogliaDirectory);
 
 		JLabel lblMaxLength = new JLabel("Lunghezza massima:");
-		lblMaxLength.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblMaxLength.setBounds(538, 128, 158, 20);
+		lblMaxLength.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblMaxLength.setBounds(437, 142, 136, 20);
 		frame.getContentPane().add(lblMaxLength);
 
 		JTextField textFieldMaxLength = new JFormattedTextField();
-		textFieldMaxLength.setBounds(703, 128, 96, 20);
+		textFieldMaxLength.setBounds(583, 142, 96, 20);
 		textFieldMaxLength.setColumns(10);
 		textFieldMaxLength.setText("1000");
 		frame.getContentPane().add(textFieldMaxLength);
 
-		JLabel lblMaxLengthGraph = new JLabel("Lunghezza file");
-		lblMaxLengthGraph.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMaxLengthGraph.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMaxLengthGraph.setBounds(46, 252, 406, 16);
-		frame.getContentPane().add(lblMaxLengthGraph);
-
-
-		JLabel lblIntervalGraph = new JLabel("Intervalli");
-		lblIntervalGraph.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIntervalGraph.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblIntervalGraph.setBounds(470, 252, 406, 16);
-		frame.getContentPane().add(lblIntervalGraph);
-
 		SpinnerNumberModel model1 = new SpinnerNumberModel(1, 1, 1000, 1);
 		JSpinner spinnerNumInterval = new JSpinner(model1);
-		spinnerNumInterval.setBounds(429, 127, 70, 22);
+		spinnerNumInterval.setBounds(329, 142, 70, 23);
 		frame.getContentPane().add(spinnerNumInterval);
 
 		SpinnerNumberModel model2 = new SpinnerNumberModel(1, 1, 1000, 1);
 		JSpinner spinnerNumRowsFile = new JSpinner(model2);
-		spinnerNumRowsFile.setBounds(191, 129, 70, 20);
+		spinnerNumRowsFile.setBounds(109, 142, 70, 20);
 		frame.getContentPane().add(spinnerNumRowsFile);
 
 		textAreaFileLength = new JTextArea();
@@ -129,6 +116,7 @@ public class GuiForm implements GuiObserver {
 			int textMaxLength = Integer.parseInt(textFieldMaxLength.getText());
 			int numInterval = (Integer)spinnerNumInterval.getValue();
 			N = (Integer)spinnerNumRowsFile.getValue();
+			Directory d = new Directory(textFieldDirectory.getText());
 
 			if (textMaxLength < numInterval && textMaxLength % numInterval != 0)
 				JOptionPane.showMessageDialog(frame, "Numero di intervalli e/o lunghezza massima errati","Errore", JOptionPane.ERROR_MESSAGE);
@@ -146,12 +134,13 @@ public class GuiForm implements GuiObserver {
 					throw new RuntimeException(ex);
 				}
 
+
 				btnSearch.setEnabled(false);
 				btnStop.setEnabled(true);
 			}
 		});
 		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnSearch.setBounds(357, 180, 96, 35);
+		btnSearch.setBounds(289, 196, 96, 35);
 		frame.getContentPane().add(btnSearch);
 
 		btnStop.addActionListener(e -> {
@@ -165,21 +154,38 @@ public class GuiForm implements GuiObserver {
 		});
 		btnStop.setEnabled(false);
 		btnStop.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnStop.setBounds(476, 180, 104, 35);
+		btnStop.setBounds(408, 196, 104, 35);
 		frame.getContentPane().add(btnStop);
 
-		JScrollPane scrollPane = new JScrollPane(textAreaInterval);
-		scrollPane.setBounds(470, 279, 406, 171);
-		frame.getContentPane().add(scrollPane);
+		JScrollPane IntervalscrollPanel = new JScrollPane(textAreaInterval);
+		IntervalscrollPanel.setBounds(470, 279, 279, 298);
+		frame.getContentPane().add(IntervalscrollPanel);
 
-		JLabel lblNRowsFile = new JLabel("Numero file più grandi:");
-		lblNRowsFile.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNRowsFile.setBounds(10, 129, 208, 23);
-		frame.getContentPane().add(lblNRowsFile);
 
-		JScrollPane scrollPane_1 = new JScrollPane(textAreaFileLength);
-		scrollPane_1.setBounds(25, 279, 431, 171);
-		frame.getContentPane().add(scrollPane_1);
+		JLabel lblIntervalGraph = new JLabel("Intervalli");
+		IntervalscrollPanel.setColumnHeaderView(lblIntervalGraph);
+		lblIntervalGraph.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIntervalGraph.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		JScrollPane fileLengthScrollPanel = new JScrollPane(textAreaFileLength);
+		fileLengthScrollPanel.setBounds(25, 279, 281, 298);
+		frame.getContentPane().add(fileLengthScrollPanel);
+
+		JLabel lblMaxLengthGraph = new JLabel("Lunghezza file");
+		fileLengthScrollPanel.setColumnHeaderView(lblMaxLengthGraph);
+		lblMaxLengthGraph.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMaxLengthGraph.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		JLabel lblNewLabel = new JLabel("Numero file:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(20, 142, 79, 14);
+		frame.getContentPane().add(lblNewLabel);
+
+		JButton btnCloseButton = new JButton("Chiudi");
+		btnCloseButton.setBounds(340, 602, 96, 35);
+		btnCloseButton.addActionListener(e -> System.exit(0));
+		frame.getContentPane().add(btnCloseButton);
+		this.setVisible(true);
 	}
 
 	public void setVisible(final boolean visible){
