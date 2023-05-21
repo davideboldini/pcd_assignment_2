@@ -1,10 +1,6 @@
 package utility.Analyser;
 
 import Model.Directory;
-import Monitor.FileMonitor;
-import Monitor.GuiObserver;
-import Monitor.IntervalMonitor;
-import Monitor.ModelObserver;
 import utility.Pair;
 
 import java.io.File;
@@ -19,6 +15,4 @@ public interface SourceAnalyzer {
     void analyzeSources(Directory d) throws InterruptedException;
 
     void stopAnalyze();
-
-    void addGuiObserver(GuiObserver observer);
 }

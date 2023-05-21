@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class SourceAnalyzerImpl implements SourceAnalyzer{
 
-    private int N;
     private FileMonitor fileMonitor;
     private IntervalMonitor intervalMonitor;
     private ControllerThread controller;
@@ -60,7 +59,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
 
 
     @Override
-    public void analyzeSources(Directory d) throws InterruptedException {
+    public void analyzeSources(Directory d) {
         Thread controllerTh = new Thread(controller);
         Runnable firstDir = new DirectoryThread(d, fileMonitor, intervalMonitor, controller);
 
@@ -73,11 +72,6 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
     @Override
     public void stopAnalyze(){
         controller.stopThreads();
-    }
-
-    @Override
-    public void addGuiObserver(final GuiObserver observer){
-        this.guiController.addObserver(observer);
     }
 
 }

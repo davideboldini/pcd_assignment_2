@@ -129,7 +129,7 @@ public class GuiForm implements GuiObserver {
 
 				sourceAnalyzer.initSource(textMaxLength, numInterval);
 				try {
-					sourceAnalyzer.analyzeSources(new Directory(textFieldDirectory.getText()));
+					sourceAnalyzer.analyzeSources(d);
 				} catch (InterruptedException ex) {
 					throw new RuntimeException(ex);
 				}

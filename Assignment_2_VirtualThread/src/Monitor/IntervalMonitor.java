@@ -2,7 +2,6 @@ package Monitor;
 
 import utility.Pair;
 import java.util.*;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class IntervalMonitor {
@@ -20,7 +19,7 @@ public class IntervalMonitor {
     public void initMap(final int MAXL, final int NI){
         this.intervalMap = new LinkedHashMap<>();
 
-        int intervalSize = MAXL;
+        int intervalSize;
 
         if (NI > 1) {
             intervalSize = MAXL / (NI - 1);
