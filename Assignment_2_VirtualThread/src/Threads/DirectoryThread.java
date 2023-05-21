@@ -5,7 +5,6 @@ import Monitor.FileMonitor;
 import Monitor.IntervalMonitor;
 
 import java.io.File;
-import java.util.*;
 
 public class DirectoryThread implements Runnable{
 
@@ -23,25 +22,26 @@ public class DirectoryThread implements Runnable{
         this.controller = controller;
     }
 
-    private void getDirectoryList(final Directory dir){
+    private void getDirectoryList(){
         for (Directory directory: dir.getDirectoryList()) {
-            Thread t = Thread.ofVirtual().unstarted(new DirectoryThread(new Directory(directory.getDirPath()), fileMonitor, intervalMonitor, controller));
-            controller.addThread(t);
+            Runnable r = new DirectoryThread(new Directory(directory.getDirPath()), fileMonitor, intervalMonitor, controller);
+            controller.addThread(r);
         }
     }
 
-    private void getFileList(final Directory dir) {
+    private void getFileList() {
         if (!dir.getJavaFileList().isEmpty()){
             for (File file: dir.getJavaFileList()) {
-                Thread t = Thread.ofVirtual().unstarted(new FileRangeThread(file, fileMonitor, intervalMonitor));
-                controller.addThread(t);
+                Runnable r = new FileRangeThread(file, fileMonitor, intervalMonitor);
+                controller.addThread(r);
             }
         }
     }
 
     @Override
     public void run() {
-        this.getDirectoryList(dir);
-        this.getFileList(dir);
+        this.getDirectoryList();
+        this.getFileList();
     }
+
 }

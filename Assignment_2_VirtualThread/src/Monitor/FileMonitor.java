@@ -4,13 +4,12 @@ import utility.Pair;
 
 import java.io.File;
 import java.util.*;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class FileMonitor {
 
     private final TreeSet<Pair<File, Long>> fileLengthMap;
-    private final Lock lock;
+    private final ReentrantLock lock;
     private final List<ModelObserver> observers = new ArrayList<>();
 
     public FileMonitor(){
@@ -24,29 +23,31 @@ public class FileMonitor {
         });
     }
 
-    public void clearMap(){
-        this.fileLengthMap.clear();
-    }
-
     public void addFile(final File file, final Long numRows){
 
         try {
-            lock.lock();
+            lock.lockInterruptibly();
             this.fileLengthMap.add(new Pair<>(file.getAbsoluteFile(), numRows));
             if (!observers.isEmpty())
                 notifyObservers();
+        } catch (InterruptedException ignored) {
         } finally {
-            lock.unlock();
+            if (lock.isHeldByCurrentThread()){
+                lock.unlock();
+            }
         }
     }
 
     public TreeSet<Pair<File,Long>> getFileLengthMap() {
         TreeSet<Pair<File, Long>> res = null;
         try {
-            lock.lock();
+            lock.lockInterruptibly();
             res = new TreeSet<>(this.fileLengthMap);
+        } catch (InterruptedException ignored) {
         } finally {
-            lock.unlock();
+            if (lock.isHeldByCurrentThread()){
+                lock.unlock();
+            }
         }
         return res;
     }

@@ -8,18 +8,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class IntervalMonitor {
 
     private HashMap<Pair<Integer,Integer>, Integer> intervalMap;
-    private final int NI;
-    private Lock lock;
+    private final int NI = 0;
+    private final ReentrantLock lock;
     private final List<ModelObserver> observers = new ArrayList<>();
 
     public IntervalMonitor(final int MAXL, final int NI){
         this.lock = new ReentrantLock();
-        this.NI = NI;
         this.initMap(MAXL, NI);
-    }
-
-    public IntervalMonitor(){
-        this.NI = 0;
     }
 
     public void initMap(final int MAXL, final int NI){
@@ -49,13 +44,15 @@ public class IntervalMonitor {
     public void addElementInInterval(final Long numRows){
 
         try {
-            lock.lock();
+            lock.lockInterruptibly();
             this.intervalMap.keySet().stream().filter(interval -> numRows < interval.getY() || (numRows >= interval.getX() && interval.getY().equals(-1))).findFirst().ifPresent(interval -> intervalMap.put(interval, intervalMap.get(interval) + 1));
-            //System.out.println(this.intervalMap.entrySet());
             if (!observers.isEmpty())
                 notifyObservers();
+        } catch (InterruptedException ignored) {
         } finally {
-            lock.unlock();
+            if (lock.isHeldByCurrentThread()){
+                lock.unlock();
+            }
         }
 
     }
@@ -63,10 +60,13 @@ public class IntervalMonitor {
     public HashMap<Pair<Integer,Integer>, Integer> getIntervalMap(){
         HashMap<Pair<Integer,Integer>, Integer> res = null;
         try {
-            lock.lock();
+            lock.lockInterruptibly();
             res = new HashMap<>(this.intervalMap);
+        } catch (InterruptedException ignored) {
         } finally {
-            lock.unlock();
+            if (lock.isHeldByCurrentThread()){
+                lock.unlock();
+            }
         }
         return res;
     }

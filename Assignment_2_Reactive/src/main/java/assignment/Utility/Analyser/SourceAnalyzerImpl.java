@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 public class SourceAnalyzerImpl implements SourceAnalyzer {
 
-    public DataStructureFlow dataStructureFlow;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     public CompletableFuture<Pair<TreeSet<Pair<File, Long>>, Map<Pair<Integer,Integer>, Integer>>> getReport(final Directory d, final int MAXL, final int NI){
@@ -81,35 +80,6 @@ public class SourceAnalyzerImpl implements SourceAnalyzer {
                 guiPublishSubject.onComplete();
             }
         }));
-
-        /*
-        pairObservable.subscribeWith(new Observer<Pair<File, Long>>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {}
-
-            @Override
-            public void onNext(@NonNull Pair<File, Long> fileLongPair) {
-                fileLengthStructure.addElement(fileLongPair);
-                intervalStructure.addElement(fileLongPair.getY());
-                guiPublishSubject.onNext(new Pair<>(new TreeSet<>(fileLengthStructure.getFileLengthTree()), new HashMap<>(intervalStructure.getIntervalMap())));
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {}
-
-            @Override
-            public void onComplete() {
-                try {
-                    Thread.sleep(80);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                guiPublishSubject.onComplete();
-            }
-        });
-
-         */
-
     }
 
     public void stopFlows(){

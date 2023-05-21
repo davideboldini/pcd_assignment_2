@@ -3,21 +3,22 @@ package Threads;
 import Controller.GuiController;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.*;
 
 
 public class ControllerThread implements Runnable{
 
-    private final Queue<Thread> threadQueue;
+    private final ExecutorService virtualExecutors = Executors.newVirtualThreadPerTaskExecutor();
     private GuiController guiController;
+    private final Queue<Future<?>> futureQueue;
 
     public ControllerThread(){
-        this.threadQueue = new ConcurrentLinkedQueue<>();
+        this.futureQueue = new ConcurrentLinkedQueue<>();
     }
 
-    public void addThread(final Thread t){
-        this.threadQueue.add(t);
-        t.start();
+    public void addThread(final Runnable t){
+        Future<?> future = virtualExecutors.submit(t);
+        futureQueue.add(future);
     }
 
     public void addGuiThread(final GuiController gc){
@@ -27,25 +28,29 @@ public class ControllerThread implements Runnable{
 
     @Override
     public void run() {
-        while(!threadQueue.isEmpty()){
+
+        while (!futureQueue.isEmpty()){
             try {
-                this.threadQueue.poll().join();
-            } catch (InterruptedException e) {
+                this.futureQueue.poll().get();
+            } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
+
         if (guiController != null){
             this.guiController.processStop();
         }
     }
 
     public void stopThreads(){
-        for (Thread t: threadQueue) {
-            threadQueue.remove(t);
-            if (t.isAlive() && !t.isInterrupted())
-                t.interrupt();
-        }
+
+        virtualExecutors.shutdownNow();
+
         this.guiController.processStop();
-        Thread.currentThread().interrupt();
+
+        while (!futureQueue.isEmpty()){
+            this.futureQueue.poll().cancel(true);
+        }
+        //Thread.currentThread().interrupt();
     }
 }

@@ -12,8 +12,6 @@ import utility.Pair;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class SourceAnalyzerImpl implements SourceAnalyzer{
 
@@ -28,7 +26,8 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
         this.guiController.addObserver(guiObserver);
     }
 
-    public SourceAnalyzerImpl(){}
+    public SourceAnalyzerImpl(){
+    }
 
     @Override
     public void initSource(final int MAXL, final int NI){
@@ -47,7 +46,7 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
     @Override
     public Pair<Map<Pair<Integer, Integer>, Integer>, List<Pair<File,Long>>> getReport(Directory d) throws InterruptedException {
         Thread controllerTh = Thread.ofVirtual().unstarted(controller);
-        Thread firstDir = Thread.ofVirtual().unstarted(new DirectoryThread(d, fileMonitor, intervalMonitor, controller));
+        Runnable firstDir = new DirectoryThread(d, fileMonitor, intervalMonitor, controller);
 
         controller.addThread(firstDir);
         controllerTh.start();
@@ -62,21 +61,17 @@ public class SourceAnalyzerImpl implements SourceAnalyzer{
 
     @Override
     public void analyzeSources(Directory d) throws InterruptedException {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Thread controllerTh = Thread.ofVirtual().unstarted(controller);
-        Thread firstDir = Thread.ofVirtual().unstarted(new DirectoryThread(d, fileMonitor, intervalMonitor, controller));
+        Thread controllerTh = new Thread(controller);
+        Runnable firstDir = new DirectoryThread(d, fileMonitor, intervalMonitor, controller);
 
-        executorService.execute(() -> {
-            guiController.processStart();
-            controller.addThread(firstDir);
-            controller.addGuiThread(guiController);
-            controllerTh.start();
-        });
+        guiController.processStart();
+        controller.addThread(firstDir);
+        controller.addGuiThread(guiController);
+        controllerTh.start();
     }
 
     @Override
     public void stopAnalyze(){
-        //guiController.processStop();
         controller.stopThreads();
     }
 

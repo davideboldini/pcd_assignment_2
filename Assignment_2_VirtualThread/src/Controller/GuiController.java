@@ -22,7 +22,6 @@ public class GuiController implements Runnable, ModelObserver{
 
     public void processStop(){
         this.running = false;
-        Thread.currentThread().interrupt();
     }
 
     public void processStart(){
@@ -31,12 +30,12 @@ public class GuiController implements Runnable, ModelObserver{
 
     @Override
     public synchronized void modelFileUpdated(final FileMonitor fileMonitor) {
-        this.fileLengthMap = fileMonitor.getFileLengthMap();
+        this.fileLengthMap = new TreeSet<>(fileMonitor.getFileLengthMap());
     }
 
     @Override
     public synchronized void modelIntervalUpdated(final IntervalMonitor intervalMonitor) {
-        this.intervalMap = intervalMonitor.getIntervalMap();
+        this.intervalMap = new HashMap<>(intervalMonitor.getIntervalMap());
     }
 
 
@@ -44,7 +43,7 @@ public class GuiController implements Runnable, ModelObserver{
     public void run() {
         while(running) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(30);
             } catch (Exception e){
                 e.printStackTrace();
             }

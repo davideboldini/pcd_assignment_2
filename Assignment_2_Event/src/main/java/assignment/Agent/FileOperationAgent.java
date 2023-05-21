@@ -59,9 +59,9 @@ public class FileOperationAgent extends AbstractVerticle {
                 sd.getCounter("numDir", ar -> {
                     Counter counter = ar.result();
                     counter.decrementAndGet(val -> {
-                        System.out.println(val);
+                        //System.out.println(val);
                         if (val.result() == 0){
-                            System.out.println("End");
+                            //System.out.println("End");
                             eventBus.publish("end-topic", null);
                         }
                     });
